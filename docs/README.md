@@ -8,7 +8,7 @@ Describe the project.
 - Zach Gharst: [@ZDGharst](https://github.com/ZDGharst)
 - William Keke
 - Benaiah Kilen: [@benaiahk](https://github.com/benaiahk)
-- Atticus Parris
+- Atticus Parris: [@atparris](https://github.com/atparris)
 - Andrew Poitras
 
 ### Technology Used
