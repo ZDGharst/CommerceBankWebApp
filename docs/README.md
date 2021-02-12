@@ -21,6 +21,13 @@ Application must include:
 ### Technology Used
 HTML, CSS, JS, C#.NET MVC, MS SQL Server, xUnit
 
+### Group Procedures
+- General netiquette. We are all humans and like to be respected.
+- Don't *ever* push to the master branch.
+- Use branches as appropriate; commit often (15~ minutes), push frequently (once a day), and merge request when ready (once a week).
+- At least two other group members must approve pull requests before merging into master branch.
+- Small check-ins every morning around 9 a.m. in the Discord server.
+
 ### To Do
 Please view the [issues section](issues) to see what is on our to do list.
 
