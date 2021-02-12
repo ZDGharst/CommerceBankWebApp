@@ -6,13 +6,16 @@ Describe the project.
 
 ### Team
 - Zach Gharst: [@ZDGharst](https://github.com/ZDGharst)
+- William Keke
 - Benaiah Kilen: [@benaiahk](https://github.com/benaiahk)
+- Atticus Parris
+- Andrew Poitras
 
 ### Technology Used
 Languages, engines, frameworks, technologies, style guide, etc.
 
 ### To Do
-Please view the [issues section]() to see what is on our to do list.
+Please view the [issues section](issues) to see what is on our to do list.
 
 ### License
-This project is licensed under the terms of the [MIT license](docs/LICENSE).
+This project is licensed under the terms of the [MIT license](LICENSE).
