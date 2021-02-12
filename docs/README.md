@@ -12,11 +12,11 @@ Application must include:
 - Notifications based on rules
 
 ### Team
-- Zach Gharst: [@ZDGharst](https://github.com/ZDGharst)
-- William Keke
-- Benaiah Kilen: [@benaiahk](https://github.com/benaiahk)
-- Atticus Parris: [@atparris](https://github.com/atparris)
-- Andrew Poitras
+- Zach Gharst (Database Administrator): [@ZDGharst](https://github.com/ZDGharst)
+- William Keke (Project Manager)
+- Benaiah Kilen (Developer): [@benaiahk](https://github.com/benaiahk)
+- Atticus Parris (Developer): [@atparris](https://github.com/atparris)
+- Andrew Poitras (Developer)
 
 ### Technology Used
 HTML, CSS, JS, C#.NET MVC, MS SQL Server, xUnit
