@@ -16,7 +16,7 @@ Application must include:
 - William Keke (Project Manager)
 - Benaiah Kilen (Developer): [@benaiahk](https://github.com/benaiahk)
 - Atticus Parris (Developer): [@atparris](https://github.com/atparris)
-- Andrew Poitras (Developer)
+- Andrew Poitras (Developer): [@poitrasandrew](https://github.com/poitrasandrew)
 
 ### Technology Used
 HTML, CSS, JS, C#.NET MVC, MS SQL Server, xUnit
