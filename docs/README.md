@@ -13,10 +13,10 @@ Application must include:
 
 ### Team
 - Zach Gharst (Database Administrator): [@ZDGharst](https://github.com/ZDGharst)
-- William Keke (Project Manager)
+- William Keke (Project Manager): [@WillKeke](https://github.com/willkeke)
 - Benaiah Kilen (Developer): [@benaiahk](https://github.com/benaiahk)
 - Atticus Parris (Developer): [@atparris](https://github.com/atparris)
-- Andrew Poitras (Developer)
+- Andrew Poitras (Developer): [@poitrasandrew](https://github.com/poitrasandrew)
 
 ### Technology Used
 HTML, CSS, JS, C#.NET MVC, MS SQL Server, xUnit
@@ -29,7 +29,7 @@ HTML, CSS, JS, C#.NET MVC, MS SQL Server, xUnit
 - Small check-ins every morning around 9 a.m. in the Discord server.
 
 ### To Do
-Please view the [issues section](issues) to see what is on our to do list.
+Please view the [issues section](../../../issues) and [projects](../../../projects) to see what is on our to do list.
 
 ### License
 This project is licensed under the terms of the [MIT license](LICENSE).
