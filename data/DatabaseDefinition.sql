@@ -26,7 +26,7 @@ CREATE TABLE Account (
     account_type        VARCHAR(8) NOT NULL,
     balance             MONEY NOT NULL,
     nickname            VARCHAR(32),
-    interest_rate       DECIMAL NOT NULL
+    interest_rate       DECIMAL(6,6) NOT NULL
 );
 
 CREATE TABLE Financial_Transaction (
