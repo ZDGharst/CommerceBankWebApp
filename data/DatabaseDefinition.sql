@@ -78,3 +78,7 @@ INSERT INTO Account
 	VALUES (
 		1, 'Checking', $5000, 'General Checking', 0.001
 	);
+
+BULK INSERT Financial_Transaction
+FROM '/home/fontaine/Projects/commerce/data/RawData.csv'
+WITH ( FIRSTROW = 2, DATAFILETYPE='char', FIELDTERMINATOR =',', ROWTERMINATOR = '\n', TABLOCK);
