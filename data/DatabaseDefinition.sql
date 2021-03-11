@@ -1,10 +1,13 @@
-/* This file contains the SQL to create the database from scratch. */
-
+/* This file contains the SQL to create the database from scratch. Anyone who uses this file should
+ * end up on the same schema as the database in production, but without the content.
+ * 
+ * TODO: -Add the hashing algorithm to the password column once the log in form is ready. 
+ *       -Add additional users other than the SA in order to encapsulate data. */
 DROP DATABASE IF EXISTS CommerceBank;
 CREATE DATABASE CommerceBank;
-
 USE CommerceBank;
 
+/* Create all initial tables. */
 CREATE TABLE Customer (
     id                  INT PRIMARY KEY IDENTITY(1, 1),
     username            VARCHAR(32) NOT NULL,
@@ -51,34 +54,43 @@ CREATE TABLE Notification_Rule (
     customer_id         INT NOT NULL,
     type                VARCHAR(32) NOT NULL,
     condition           VARCHAR(32),
-    value				DECIMAL
+    value               DECIMAL
 );
 
+/* Add foreign key constraints. */
 ALTER TABLE Account
-	ADD FOREIGN KEY (customer_id) REFERENCES Customer(id);
-	
+    ADD FOREIGN KEY (customer_id) REFERENCES Customer(id);
+    
 ALTER TABLE Financial_Transaction
-	ADD FOREIGN KEY (account_id) REFERENCES Account(id);
-	
+    ADD FOREIGN KEY (account_id) REFERENCES Account(id);
+    
 ALTER TABLE Notification
-	ADD FOREIGN KEY (transaction_id) REFERENCES Financial_Transaction(id),
-	    FOREIGN KEY (notification_rule) REFERENCES Notification_Rule(id);
-	
+    ADD FOREIGN KEY (transaction_id) REFERENCES Financial_Transaction(id),
+        FOREIGN KEY (notification_rule) REFERENCES Notification_Rule(id);
+    
 ALTER TABLE Notification_Rule
-	ADD FOREIGN KEY (customer_id) REFERENCES Customer(id);
-	
-INSERT INTO Customer
-	(username, password, email, first_name, last_name, date_of_birth, address, city, state, zip, last_login)
-	VALUES (
-		'JPrice', '123456', 'jprice@example.com', 'Joe', 'Price', GETDATE(), '1234 Main St.', 'Kansas City', 'MO', 64117, GETDATE()
-	);
-	
-INSERT INTO Account
-	(customer_id, account_type, balance, nickname, interest_rate)
-	VALUES (
-		1, 'Checking', $5000, 'General Checking', 0.001
-	);
+    ADD FOREIGN KEY (customer_id) REFERENCES Customer(id);
 
+/* Insert initial customer and account. */
+INSERT INTO Customer
+    (username, password, email, first_name, last_name, date_of_birth, address, city, state, zip, last_login)
+    VALUES (
+        'JPrice', '123456', 'jprice@example.com', 'Joe', 'Price', GETDATE(), '1234 Main St.', 'Kansas City', 'MO', 64117, GETDATE()
+    );
+    
+INSERT INTO Account
+    (customer_id, account_type, balance, nickname, interest_rate)
+    VALUES (
+        1, 'Checking', $5000, 'General Checking', 0.001
+    );
+
+/* Import initial transactions for the initial customer. */
 BULK INSERT Financial_Transaction
-FROM '/home/fontaine/Projects/commerce/data/RawData.csv'
-WITH ( FIRSTROW = 2, DATAFILETYPE='char', FIELDTERMINATOR =',', ROWTERMINATOR = '\n', TABLOCK);
+    FROM '/home/fontaine/Projects/commerce/data/RawData.csv'
+    WITH (
+         FIRSTROW = 2,
+         DATAFILETYPE='char',
+         FIELDTERMINATOR =',',
+         ROWTERMINATOR = '\n',
+         TABLOCK
+    );
