@@ -12,11 +12,13 @@ a {
   color: #0366d6;
 }
 
+/* Give visual feedback when hovering on nav bar choices */
 .navbar-nav > li > a:hover {
     border-bottom: 7px solid #4FA800;
     font-weight: 550;
 }
 
+/* Change font and setup bottom border for visual feedback */
 .navbar-nav > li > a {
     border-bottom: 7px solid transparent;
     font-family: Poppins, Open Sans, sans-serif;
