@@ -12,6 +12,16 @@ a {
   color: #0366d6;
 }
 
+.navbar-nav > li > a:hover {
+    border-bottom: 7px solid #4FA800;
+    font-weight: 550;
+}
+
+.navbar-nav > li > a {
+    border-bottom: 7px solid transparent;
+    font-family: Poppins, Open Sans, sans-serif;
+}
+
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;
