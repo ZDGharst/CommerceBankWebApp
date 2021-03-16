@@ -1,11 +1,18 @@
 /* This file contains the SQL to create the database from scratch. Anyone who uses this file should
- * end up on the same schema as the database in production, but without the content.
+ * end up on the same schema as the database in production, but without the content. Before running
+ * this, get the password from the environment variables for the user created below. 
  * 
  * TODO: -Add the hashing algorithm to the password column once the log in form is ready. 
  *       -Add additional users other than the SA in order to encapsulate data. */
 DROP DATABASE IF EXISTS CommerceBank;
 CREATE DATABASE CommerceBank;
 USE CommerceBank;
+
+/* Create the web viewer user and grant it permissions for stored procedures. Insert password in quotes.
+ * TODO: Replace grants for select/update/insert with stored procedures once they are created. */
+CREATE LOGIN CommerceWebAppCustomer WITH PASSWORD = "";
+CREATE USER CommerceWebAppCustomer FOR LOGIN CommerceWebAppCustomer;
+GRANT SELECT, UPDATE, INSERT TO CommerceWebAppCustomer;
 
 /* Create all initial tables. */
 CREATE TABLE Customer (
