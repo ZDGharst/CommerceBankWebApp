@@ -13,9 +13,6 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Customer_Id)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Account_Type)
             </th>
             <th>
@@ -33,9 +30,6 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Customer_Id)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Account_Type)
             </td>
