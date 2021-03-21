@@ -8,14 +8,15 @@ USE CommerceBank_TransactionDB;
 
 /* Create the web viewer user and grant it permissions for stored procedures. Insert password in quotes.
  * TODO: Replace grants for select/update/insert with stored procedures once they are created. */
-CREATE LOGIN CommerceWebAppCustomer WITH PASSWORD = "";
-CREATE USER CommerceWebAppCustomer FOR LOGIN CommerceWebAppCustomer;
-GRANT SELECT, UPDATE, INSERT TO CommerceWebAppCustomer;
+-- CREATE LOGIN CommerceWebAppCustomer WITH PASSWORD = "";
+-- CREATE USER CommerceWebAppCustomer FOR LOGIN CommerceWebAppCustomer;
+-- GRANT SELECT, UPDATE, INSERT TO CommerceWebAppCustomer;
 
 /* Drop tables in order of foreign key dependencies. */
 DROP TABLE IF EXISTS Notification;
 DROP TABLE IF EXISTS Notification_Rule;
 DROP TABLE IF EXISTS Financial_Transaction;
+DROP TABLE IF EXISTS Customer_Account;
 DROP TABLE IF EXISTS Account;
 DROP TABLE IF EXISTS Customer_Info;
 
@@ -36,14 +37,20 @@ CREATE TABLE [dbo].[Customer_Info] (
 
 CREATE TABLE [dbo].[Account] (
     [id]            INT            IDENTITY(211111110, 1),
-    [customer_id]   NVARCHAR (450) NOT NULL,
     [account_type]  VARCHAR (8)    NOT NULL,
     [balance]       MONEY          NOT NULL,
     [nickname]      VARCHAR (32)   NULL,
     [interest_rate] DECIMAL (6, 6) NULL,
 
-    PRIMARY KEY CLUSTERED ([id] ASC),
-    FOREIGN KEY ([customer_id]) REFERENCES [dbo].[AspNetUsers] ([Id])
+    PRIMARY KEY CLUSTERED ([id] ASC)
+);
+
+CREATE TABLE [dbo].[Customer_Account] (
+    [customer_id]   NVARCHAR (450) NOT NULL,
+    [account_id]    INT            NOT NULL,
+    
+    FOREIGN KEY ([customer_id]) REFERENCES [dbo].[AspNetUsers] ([Id]),
+    FOREIGN KEY ([account_id]) REFERENCES [dbo].[Account] ([Id])
 );
 
 CREATE TABLE [dbo].[Financial_Transaction] (
@@ -92,10 +99,15 @@ INSERT INTO Customer_Info VALUES (
     64110
 );
 
-INSERT INTO Account (customer_id, account_type, balance, nickname, interest_rate)
+INSERT INTO Account (account_type, balance, nickname, interest_rate)
     VALUES (
-        "b5e057b8-06ae-458d-a7f6-6228d707e5c3", 'Checking', $5000, 'General Checking', 0.001
+        'Checking', $5000, 'General Checking', 0.001
     );
+
+INSERT INTO Customer_Account VALUES (
+    "b5e057b8-06ae-458d-a7f6-6228d707e5c3",
+    211111110
+);
 
 /* Import initial transactions for the initial customer. */
 BULK INSERT Financial_Transaction
