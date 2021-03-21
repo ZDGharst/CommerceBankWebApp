@@ -9,7 +9,7 @@ namespace DatabaseAdministration.Models
   {
     public int Id { get; set; }
     public int Account_Id { get; set; }
-    public DateTime Timestamp { get; set; }
+    public DateTime TimeStamp { get; set; }
     public string Type { get; set; }
     public string Description { get; set; }
 

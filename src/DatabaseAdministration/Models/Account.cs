@@ -8,7 +8,7 @@ namespace DatabaseAdministration.Models
   public class Account
   {
     public int Id { get; set; }
-    public int Customer_Id { get; set; }
+    public string Customer_Id { get; set; }
     public string Account_Type { get; set; }
     public string Nickname { get; set; }
 
