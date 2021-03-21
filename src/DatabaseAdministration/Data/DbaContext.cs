@@ -11,6 +11,7 @@ namespace DatabaseAdministration.Data
         }
 
         public DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public DbSet<Customer_Info> Customer_Info { get; set; }
         public DbSet<Account> Account { get; set; }
         public DbSet<Financial_Transaction> Financial_Transaction { get; set; }
         public DbSet<Notification> Notification { get; set; }
