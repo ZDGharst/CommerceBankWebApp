@@ -70,7 +70,7 @@ CREATE TABLE [dbo].[Notification_Rule] (
 );
 
 CREATE TABLE [dbo].[Notification] (
-    [id]                INT           IDENTITY (1, 1),
+    [id]                INT           IDENTITY(1, 1),
     [transaction_id]    INT           NULL,
     [notification_rule] INT           NOT NULL,
     [message]           VARCHAR (150) NULL,
