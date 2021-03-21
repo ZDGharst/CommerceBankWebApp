@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <UserSecretsId>aspnet-Commerce_WebApp-28867470-CDEA-41B1-BA71-E561FF7B7F56</UserSecretsId>
+    <UserSecretsId>fdba2a92-9633-4b3a-9e06-ef3a41d5c8f5</UserSecretsId>
     <RootNamespace>Commerce_WebApp</RootNamespace>
   </PropertyGroup>
 
@@ -17,6 +17,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
   </ItemGroup>
 
 </Project>
