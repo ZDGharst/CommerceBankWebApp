@@ -19,3 +19,6 @@ SELECT C.NAME AS COLUMN_NAME, TYPE_NAME(C.USER_TYPE_ID) AS DATA_TYPE, C.IS_NULLA
 
 /* Scaffold CRUD tables. Edit only the parameters in brackets and remove the brackets after. */
 dotnet aspnet-codegenerator controller -name [Customer_InfoController] -m [Customer_Info] -dc [DbaContext] --relativeFolderPath Controllers --useDefaultLayout --referenceScriptLibraries
+
+/* See all the tables in a database. */
+SELECT name FROM SYSOBJECTS WHERE xtype = 'U';
