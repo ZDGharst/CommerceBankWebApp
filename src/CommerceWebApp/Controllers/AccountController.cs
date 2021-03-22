@@ -10,11 +10,11 @@ using Commerce_WebApp.Data;
 
 namespace Commerce_WebApp.Controllers
 {
-    public class TransactionTable : Controller
+    public class AccountController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public TransactionTable(ApplicationDbContext context)
+        public AccountController(ApplicationDbContext context)
         {
             _context = context;
         }
