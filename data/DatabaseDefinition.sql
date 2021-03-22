@@ -45,10 +45,11 @@ CREATE TABLE [dbo].[Account] (
     PRIMARY KEY CLUSTERED ([id] ASC)
 );
 
+/* Can't cluster Customer_Account because its primary key would exceed 900 bytes */
 CREATE TABLE [dbo].[Customer_Account] (
     [customer_id]   NVARCHAR (450) NOT NULL,
     [account_id]    INT            NOT NULL,
-    
+
     FOREIGN KEY ([customer_id]) REFERENCES [dbo].[AspNetUsers] ([Id]),
     FOREIGN KEY ([account_id]) REFERENCES [dbo].[Account] ([Id])
 );
