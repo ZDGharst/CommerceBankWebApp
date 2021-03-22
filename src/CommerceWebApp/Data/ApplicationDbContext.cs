@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using Commerce_WebApp.Models;
+
 namespace Commerce_WebApp.Data
 {
     public class ApplicationDbContext : IdentityDbContext
@@ -12,5 +14,7 @@ namespace Commerce_WebApp.Data
             : base(options)
         {
         }
+
+        public DbSet<Financial_Transaction> Financial_Transaction { get; set; }
     }
 }
