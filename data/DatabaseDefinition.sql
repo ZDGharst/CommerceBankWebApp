@@ -4,92 +4,111 @@
  * 
  * TODO: -Add the hashing algorithm to the password column once the log in form is ready. 
  *       -Add additional users other than the SA in order to encapsulate data. */
-DROP DATABASE IF EXISTS CommerceBank;
-CREATE DATABASE CommerceBank;
-USE CommerceBank;
+USE CommerceBank_TransactionDB;
 
 /* Create the web viewer user and grant it permissions for stored procedures. Insert password in quotes.
  * TODO: Replace grants for select/update/insert with stored procedures once they are created. */
-CREATE LOGIN CommerceWebAppCustomer WITH PASSWORD = "";
-CREATE USER CommerceWebAppCustomer FOR LOGIN CommerceWebAppCustomer;
-GRANT SELECT, UPDATE, INSERT TO CommerceWebAppCustomer;
+-- CREATE LOGIN CommerceWebAppCustomer WITH PASSWORD = "";
+-- CREATE USER CommerceWebAppCustomer FOR LOGIN CommerceWebAppCustomer;
+-- GRANT SELECT, UPDATE, INSERT TO CommerceWebAppCustomer;
+
+/* Drop tables in order of foreign key dependencies. */
+DROP TABLE IF EXISTS Notification;
+DROP TABLE IF EXISTS Notification_Rule;
+DROP TABLE IF EXISTS Financial_Transaction;
+DROP TABLE IF EXISTS Customer_Account;
+DROP TABLE IF EXISTS Account;
+DROP TABLE IF EXISTS Customer_Info;
 
 /* Create all initial tables. */
-CREATE TABLE Customer (
-    id                  INT PRIMARY KEY IDENTITY(1, 1),
-    username            VARCHAR(32) NOT NULL,
-    password            VARCHAR(32) NOT NULL,
-    email               VARCHAR(100) NOT NULL,
-    first_name          VARCHAR(50) NOT NULL,
-    last_name           VARCHAR(50) NOT NULL,
-    date_of_birth       DATE NOT NULL,
-    address             VARCHAR(100) NOT NULL,
-    city                VARCHAR(50) NOT NULL,
-    state               VARCHAR(2) NOT NULL,
-    zip                 INT NOT NULL,
-    last_login          DATETIME NOT NULL
+CREATE TABLE [dbo].[Customer_Info] (
+    [id]            NVARCHAR (450) NOT NULL,
+    [first_name]    VARCHAR (32)   NOT NULL,
+    [last_name]     VARCHAR (32)   NOT NULL,
+    [date_of_birth] DATE           NOT NULL,
+    [address]       VARCHAR (100)  NOT NULL,
+    [city]          VARCHAR (50)   NOT NULL,
+    [state]         VARCHAR (2)    NOT NULL,
+    [zip]           INT            NOT NULL,
+
+    PRIMARY KEY CLUSTERED ([id] ASC),
+    FOREIGN KEY ([id]) REFERENCES [dbo].[AspNetUsers] ([Id])
 );
 
-CREATE TABLE Account (
-    id                  INT PRIMARY KEY IDENTITY(211111110, 1),
-    customer_id         INT NOT NULL,
-    account_type        VARCHAR(8) NOT NULL,
-    balance             MONEY NOT NULL,
-    nickname            VARCHAR(32),
-    interest_rate       DECIMAL(6,6) NOT NULL
+CREATE TABLE [dbo].[Account] (
+    [id]            INT            IDENTITY(211111110, 1),
+    [account_type]  VARCHAR (8)    NOT NULL,
+    [balance]       MONEY          NOT NULL,
+    [nickname]      VARCHAR (32)   NULL,
+    [interest_rate] DECIMAL (6, 6) NULL,
+
+    PRIMARY KEY CLUSTERED ([id] ASC)
 );
 
-CREATE TABLE Financial_Transaction (
-    id                  INT PRIMARY KEY IDENTITY(1, 1),
-    account_id          INT NOT NULL,
-    timestamp           DATETIME NOT NULL,
-    type                VARCHAR(2) NOT NULL,
-    amount              MONEY NOT NULL,
-    balance_after       MONEY NOT NULL,
-    description         VARCHAR(100)
+/* Can't cluster Customer_Account because its primary key would exceed 900 bytes */
+CREATE TABLE [dbo].[Customer_Account] (
+    [customer_id]   NVARCHAR (450) NOT NULL,
+    [account_id]    INT            NOT NULL,
+
+    FOREIGN KEY ([customer_id]) REFERENCES [dbo].[AspNetUsers] ([Id]),
+    FOREIGN KEY ([account_id]) REFERENCES [dbo].[Account] ([Id])
 );
 
-CREATE TABLE Notification (
-    id                  INT PRIMARY KEY IDENTITY(1, 1),
-    transaction_id      INT,
-    notification_rule   INT NOT NULL,
-    message             VARCHAR(150)
+CREATE TABLE [dbo].[Financial_Transaction] (
+    [id]            INT           IDENTITY(1, 1),
+    [account_id]    INT           NOT NULL,
+    [timestamp]     DATETIME      NOT NULL,
+    [type]          VARCHAR (2)   NOT NULL,
+    [amount]        MONEY         NOT NULL,
+    [balance_after] MONEY         NOT NULL,
+    [description]   VARCHAR (100) NULL,
+    PRIMARY KEY CLUSTERED ([id] ASC),
+    FOREIGN KEY ([account_id]) REFERENCES [dbo].[Account] ([id])
 );
 
-CREATE TABLE Notification_Rule (
-    id                  INT PRIMARY KEY IDENTITY(1, 1),
-    customer_id         INT NOT NULL,
-    type                VARCHAR(32) NOT NULL,
-    condition           VARCHAR(32),
-    value               DECIMAL
+CREATE TABLE [dbo].[Notification_Rule] (
+    [id]          INT            IDENTITY(1, 1),
+    [customer_id] NVARCHAR (450) NOT NULL,
+    [type]        VARCHAR (32)   NOT NULL,
+    [condition]   VARCHAR (32)   NULL,
+    [value]       DECIMAL (18)   NULL,
+
+    PRIMARY KEY CLUSTERED ([id] ASC),
+    FOREIGN KEY ([customer_id]) REFERENCES [dbo].[AspNetUsers] ([Id])
 );
 
-/* Add foreign key constraints. */
-ALTER TABLE Account
-    ADD FOREIGN KEY (customer_id) REFERENCES Customer(id);
-    
-ALTER TABLE Financial_Transaction
-    ADD FOREIGN KEY (account_id) REFERENCES Account(id);
-    
-ALTER TABLE Notification
-    ADD FOREIGN KEY (transaction_id) REFERENCES Financial_Transaction(id),
-        FOREIGN KEY (notification_rule) REFERENCES Notification_Rule(id);
-    
-ALTER TABLE Notification_Rule
-    ADD FOREIGN KEY (customer_id) REFERENCES Customer(id);
+CREATE TABLE [dbo].[Notification] (
+    [id]                INT           IDENTITY(1, 1),
+    [transaction_id]    INT           NULL,
+    [notification_rule] INT           NOT NULL,
+    [message]           VARCHAR (150) NULL,
 
-/* Insert initial customer and account. */
-INSERT INTO Customer
-    (username, password, email, first_name, last_name, date_of_birth, address, city, state, zip, last_login)
+    PRIMARY KEY CLUSTERED ([id] ASC),
+    FOREIGN KEY ([transaction_id]) REFERENCES [dbo].[Financial_Transaction] ([id]),
+    FOREIGN KEY ([notification_rule]) REFERENCES [dbo].[Notification_Rule] ([id])
+);
+
+/* Insert initial customer and account. */ 
+INSERT INTO Customer_Info VALUES (
+    "b5e057b8-06ae-458d-a7f6-6228d707e5c3",
+    "John",
+    "Smith",
+    DATEADD(year, -21, CAST(GETDATE() AS date)),
+    "5000 Holmes St",
+    "Kansas City",
+    "MO",
+    64110
+);
+
+INSERT INTO Account (account_type, balance, nickname, interest_rate)
     VALUES (
-        'JPrice', '123456', 'jprice@example.com', 'Joe', 'Price', GETDATE(), '1234 Main St.', 'Kansas City', 'MO', 64117, GETDATE()
+        'Checking', $5000, 'General Checking', 0.001
     );
-    
-INSERT INTO Account
-    (customer_id, account_type, balance, nickname, interest_rate)
-    VALUES (
-        1, 'Checking', $5000, 'General Checking', 0.001
-    );
+
+INSERT INTO Customer_Account VALUES (
+    "b5e057b8-06ae-458d-a7f6-6228d707e5c3",
+    211111110
+);
 
 /* Import initial transactions for the initial customer. */
 BULK INSERT Financial_Transaction
