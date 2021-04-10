@@ -5,18 +5,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Commerce_WebApp.Models
 {
-  public class Financial_Transaction
+  public class Notification_Rule
   {
     public int Id { get; set; }
-    public int Account_Id { get; set; }
-    public DateTime TimeStamp { get; set; }
+    public string Customer_Id { get; set; }
     public string Type { get; set; }
-    public string Description { get; set; }
+    public string Condition { get; set; }
 
     [Column(TypeName = "decimal(18,2)")]
-    public decimal Amount { get; set; }
-
-    [Column(TypeName = "decimal(18,2)")]
-    public decimal Balance_After { get; set; }
+    public decimal Value { get; set; }
   }
 }

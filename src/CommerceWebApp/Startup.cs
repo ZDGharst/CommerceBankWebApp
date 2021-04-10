@@ -31,7 +31,8 @@ namespace Commerce_WebApp
         {
             var buildString = new SqlConnectionStringBuilder(Configuration.GetConnectionString("CommerceBank"));
             buildString.Password = Configuration["CommerceBankDB:Password"];
-            
+
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(buildString.ConnectionString));
             services.AddDatabaseDeveloperPageExceptionFilter();
