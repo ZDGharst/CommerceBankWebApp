@@ -18,6 +18,17 @@ a {
     font-weight: 550;
 }
 
+/* Give visual feedback for logout button */
+.navbar-nav > li > form > button:hover {
+    border-bottom: 3px solid #4FA800;
+    font-weight: 550;
+}
+
+.navbar-nav > li > form > button {
+    border-bottom: 3px solid transparent;
+    font-family: Poppins, Open Sans, sans-serif;
+}
+
 /* Change font and setup bottom border for visual feedback */
 .navbar-nav > li > a {
     border-bottom: 3px solid transparent;
