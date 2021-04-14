@@ -4,6 +4,7 @@
     ViewData["Title"] = "Account";
 }
 <style type="text/css">
+    /* table */
     .tg {
         border-collapse: collapse;
         border-spacing: 0;
@@ -51,9 +52,23 @@
             will-change: transform
         }
 
+        /* table alphanumeric item */
         .tg .tg-0pky {
             border-color: inherit;
             text-align: left;
+            vertical-align: top
+        }
+
+        /* insert dollar sign before money items */
+        .tg .tg-money:before {
+            text-align: right;
+            content: '$';
+        }
+
+        /* table money item */
+        .tg .tg-money {
+            border-color: inherit;
+            text-align: right;
             vertical-align: top
         }
 
@@ -104,8 +119,8 @@
             <th class="tg-j1i3">Date</th>
             <th class="tg-j1i3">Transaction Description</th>
             <th class="tg-j1i3">Type</th>
-            <th class="tg-u1i3">Amount</th>
-            <th class="tg-ul38">Balance</th>
+            <th class="tg-j1i3">Amount</th>
+            <th class="tg-j1i3">Balance</th>
         </tr>
     </thead>
     <tbody>
@@ -120,10 +135,10 @@
             <td class="tg-0pky">
             @Html.DisplayFor(modelItem => item.Type)
             </td>
-            <td class="tg-0pky">
+            <td class="tg-money">
             @Html.DisplayFor(modelItem => item.Amount)
             </td>
-            <td class="tg-0pky">
+            <td class="tg-money">
             @Html.DisplayFor(modelItem => item.Balance_After)
             </td>
         </tr>

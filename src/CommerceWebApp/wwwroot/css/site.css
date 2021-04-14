@@ -24,12 +24,13 @@ a {
     font-weight: 550;
 }
 
+/* Change font and setup bottom border for visual feedback on logout button */
 .navbar-nav > li > form > button {
     border-bottom: 3px solid transparent;
     font-family: Poppins, Open Sans, sans-serif;
 }
 
-/* Change font and setup bottom border for visual feedback */
+/* Change font and setup bottom border for visual feedback on navbar */
 .navbar-nav > li > a {
     border-bottom: 3px solid transparent;
     font-family: Poppins, Open Sans, sans-serif;
