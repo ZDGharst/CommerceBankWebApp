@@ -6,25 +6,25 @@
 <style type="text/css">
     /* table */
     .tg {
-        border-collapse: collapse;
+        border-collapse: separate;
         border-spacing: 0;
     }
 
         .tg td {
-            border-color: black;
-            border-style: solid;
-            border-width: 1px;
+            border-bottom: 3px solid #007AA3;
+            border-right: 3px solid #007AA3;
             font-family: Arial, sans-serif;
             font-size: 14px;
             overflow: hidden;
             padding: 14px 20px;
             word-break: normal;
+            background-color: #faf9f7;
         }
 
         .tg th {
-            border-color: black;
-            border-style: solid;
-            border-width: 1px;
+            border-top: 3px solid #006747;
+            border-bottom: 3px solid #006747;
+            border-right: 3px solid #006747;
             font-family: Arial, sans-serif;
             font-size: 14px;
             font-weight: normal;
@@ -43,31 +43,37 @@
         }
 
         .tg .tg-j1i3 {
-            border-color: inherit;
             position: -webkit-sticky;
             position: sticky;
             text-align: left;
-            top: -1px;
+            top: 0px;
             vertical-align: top;
-            will-change: transform
+            will-change: transform;
+            background-color: #4FA800;
+        }
+
+        /* apply left border for th then td */
+        .tg th:first-child {
+            border-left: 3px solid #006747;
+        }
+
+        .tg td:first-child {
+            border-left: 3px solid #007AA3;
         }
 
         /* table alphanumeric item */
         .tg .tg-0pky {
-            border-color: inherit;
             text-align: left;
             vertical-align: top
         }
 
         /* insert dollar sign before money items */
         .tg .tg-money:before {
-            text-align: right;
             content: '$';
         }
 
         /* table money item */
         .tg .tg-money {
-            border-color: inherit;
             text-align: right;
             vertical-align: top
         }
