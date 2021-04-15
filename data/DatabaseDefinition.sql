@@ -120,3 +120,11 @@ BULK INSERT Financial_Transaction
          ROWTERMINATOR = '\n',
          TABLOCK
     );
+
+/* Drop procedures then recreate them. */
+
+DROP PROCEDURE IF EXISTS ReturnTransactions;
+
+CREATE PROCEDURE ReturnTransactions @account_id INT
+AS
+SELECT timestamp, description, type, amount, balance_after FROM Financial_Transaction WHERE account_id = @account_id;
