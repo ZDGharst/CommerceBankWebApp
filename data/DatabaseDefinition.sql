@@ -128,7 +128,7 @@ DROP PROCEDURE IF EXISTS LoginNotification;
 
 CREATE PROCEDURE ReturnTransactions @account_id INT
 AS
-SELECT id, account_id, timestamp, description, type, amount, balance_after FROM Financial_Transaction WHERE account_id = @account_id ORDER BY timestamp DESC;
+SELECT id, account_id, FORMAT(timestamp, 'MM/dd/yyyy h:mm tt') as timestamp, description, IIF(type = 'CR', 'Credit', 'Debit') as type, amount, balance_after FROM Financial_Transaction WHERE account_id = @account_id ORDER BY id DESC;
 
 CREATE PROCEDURE LoginNotification @customer_id VARCHAR(450)
 AS

@@ -11,7 +11,7 @@ namespace Commerce_WebApp.Models
   {
     public int Id { get; set; }
     public int Account_Id { get; set; }
-    public DateTime TimeStamp { get; set; }
+    public string TimeStamp { get; set; }
     public string Type { get; set; }
     public string Description { get; set; }
 
