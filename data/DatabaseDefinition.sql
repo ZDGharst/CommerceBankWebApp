@@ -124,7 +124,27 @@ BULK INSERT Financial_Transaction
 /* Drop procedures then recreate them. */
 
 DROP PROCEDURE IF EXISTS ReturnTransactions;
+DROP PROCEDURE IF EXISTS LoginNotification;
 
 CREATE PROCEDURE ReturnTransactions @account_id INT
 AS
 SELECT id, account_id, timestamp, description, type, amount, balance_after FROM Financial_Transaction WHERE account_id = @account_id ORDER BY timestamp DESC;
+
+CREATE PROCEDURE LoginNotification @customer_id VARCHAR(450)
+AS
+BEGIN
+	DECLARE @rule_id INT;
+    
+    SELECT @rule_id = id
+    FROM Notification_Rule
+    WHERE customer_id = @customer_id AND type = "login";
+
+    IF @rule_id IS NOT NULL
+    BEGIN
+        INSERT INTO Notification (notification_rule, message)
+        VALUES (
+            @rule_id,
+            "A new login on your customer account occured on " + CONVERT(VARCHAR, GETDATE(), 1) + " at " + CONVERT(VARCHAR, GETDATE(), 8) + "."
+        );
+    END
+END
