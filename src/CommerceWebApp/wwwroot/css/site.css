@@ -8,6 +8,7 @@ a.navbar-brand {
 }
 
 header {
+    /* slight off-white background for header to differentiate from rest of page */
     background-color: #faf9f7;
 }
 
