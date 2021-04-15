@@ -127,4 +127,4 @@ DROP PROCEDURE IF EXISTS ReturnTransactions;
 
 CREATE PROCEDURE ReturnTransactions @account_id INT
 AS
-SELECT id, account_id, timestamp, description, type, amount, balance_after FROM Financial_Transaction WHERE account_id = @account_id;
+SELECT id, account_id, timestamp, description, type, amount, balance_after FROM Financial_Transaction WHERE account_id = @account_id ORDER BY timestamp DESC;
