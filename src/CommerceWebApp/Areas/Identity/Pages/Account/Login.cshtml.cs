@@ -87,6 +87,9 @@ namespace Commerce_WebApp.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+
+                    // run the stored procedure "LoginNotification" here
+
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
