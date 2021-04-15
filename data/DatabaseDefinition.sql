@@ -10,7 +10,7 @@ USE CommerceBank_TransactionDB;
  * TODO: Replace grants for select/update/insert with stored procedures once they are created. */
 -- CREATE LOGIN CommerceWebAppCustomer WITH PASSWORD = "";
 -- CREATE USER CommerceWebAppCustomer FOR LOGIN CommerceWebAppCustomer;
--- GRANT SELECT, UPDATE, INSERT TO CommerceWebAppCustomer;
+-- GRANT SELECT, UPDATE, INSERT, EXEC TO CommerceWebAppCustomer;
 
 /* Drop tables in order of foreign key dependencies. */
 DROP TABLE IF EXISTS Notification;
@@ -127,4 +127,4 @@ DROP PROCEDURE IF EXISTS ReturnTransactions;
 
 CREATE PROCEDURE ReturnTransactions @account_id INT
 AS
-SELECT timestamp, description, type, amount, balance_after FROM Financial_Transaction WHERE account_id = @account_id;
+SELECT id, account_id, timestamp, description, type, amount, balance_after FROM Financial_Transaction WHERE account_id = @account_id;

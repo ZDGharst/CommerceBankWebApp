@@ -19,9 +19,9 @@ namespace Commerce_WebApp.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id)
         {
-            return View(await _context.Financial_Transaction.ToListAsync());
+            return View(await _context.Financial_Transaction.FromSqlInterpolated($"ReturnTransactions {id}").ToListAsync());
         }
     }
 }
