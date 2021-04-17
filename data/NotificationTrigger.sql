@@ -23,9 +23,6 @@ BEGIN
 	FETCH NEXT FROM inserted_cursor INTO @inserted_id, @inserted_account_id, @inserted_type, @inserted_amount, @inserted_balance_after
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
-		-- Table variable to hold all rules found.
-		-- DECLARE @Rules TABLE(id INT, type VARCHAR(32), condition VARCHAR(32), value DECIMAL(18));
-
 		-- Find all the notification rules that belongs to all customers that own
 		-- the account that the transaction was created on and store it in a
 		-- temporary table.

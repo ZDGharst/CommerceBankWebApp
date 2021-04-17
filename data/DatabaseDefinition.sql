@@ -67,11 +67,14 @@ CREATE TABLE [dbo].[Financial_Transaction] (
 );
 
 CREATE TABLE [dbo].[Notification_Rule] (
-    [id]          INT            IDENTITY(1, 1),
-    [customer_id] NVARCHAR (450) NOT NULL,
-    [type]        VARCHAR (32)   NOT NULL,
-    [condition]   VARCHAR (32)   NULL,
-    [value]       DECIMAL (18)   NULL,
+    [id]           /INT            IDENTITY(1, 1),
+    [customer_id]  NVARCHAR (450) NOT NULL,
+    [type]         VARCHAR (32)   NOT NULL,
+    [condition]    VARCHAR (5)   NULL,
+    [value]        DECIMAL (18)   NULL,
+    [notify_text]  BIT            NOT NULL,
+    [notify_email] BIT            NOT NULL,
+    [notify_web]   BIT            NOT NULL,
 
     PRIMARY KEY CLUSTERED ([id] ASC),
     FOREIGN KEY ([customer_id]) REFERENCES [dbo].[AspNetUsers] ([Id])
