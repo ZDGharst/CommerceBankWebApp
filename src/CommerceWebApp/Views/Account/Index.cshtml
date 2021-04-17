@@ -4,29 +4,30 @@
     ViewData["Title"] = "Account";
 }
 <style type="text/css">
+    /* table */
     .tg {
-        border-collapse: collapse;
+        border-collapse: separate;
         border-spacing: 0;
     }
 
         .tg td {
-            border-color: black;
-            border-style: solid;
-            border-width: 1px;
+            border-bottom: 3px solid #007AA3;
+            border-right: 3px solid #007AA3;
             font-family: Arial, sans-serif;
             font-size: 14px;
             overflow: hidden;
             padding: 14px 20px;
             word-break: normal;
+            background-color: #faf9f7;
         }
 
         .tg th {
-            border-color: black;
-            border-style: solid;
-            border-width: 1px;
+            border-top: 3px solid #006747;
+            border-bottom: 3px solid #006747;
+            border-right: 3px solid #006747;
             font-family: Arial, sans-serif;
             font-size: 14px;
-            font-weight: normal;
+            font-weight: 550;
             overflow: hidden;
             padding: 14px 20px;
             word-break: normal;
@@ -42,19 +43,45 @@
         }
 
         .tg .tg-j1i3 {
-            border-color: inherit;
             position: -webkit-sticky;
             position: sticky;
             text-align: left;
-            top: -1px;
+            top: 0px;
             vertical-align: top;
-            will-change: transform
+            will-change: transform;
+            background-color: #4FA800;
         }
 
+        /* apply left border for th */
+        .tg th:first-child {
+            border-left: 3px solid #006747;
+        }
+
+        /* apply left border for td */
+        .tg td:first-child {
+            border-left: 3px solid #007AA3;
+        }
+
+        /* table alphanumeric item */
         .tg .tg-0pky {
-            border-color: inherit;
             text-align: left;
             vertical-align: top
+        }
+
+        /* insert dollar sign before money items */
+        .tg .tg-money:before {
+            content: '$';
+        }
+
+        /* table money item */
+        .tg .tg-money {
+            text-align: right;
+            vertical-align: top
+        }
+
+        /* table money header */
+        .tg .moneyHeader {
+            text-align: right;
         }
 
         .tg .tg-0lax {
@@ -98,14 +125,14 @@
         border-width: 5px 5px 0
     }
 </style>
-<table id="tg-hh5Z3" class="tg">
+<table id="tg-hh5Z3" class="tg" width="100%">
     <thead>
         <tr>
-            <th class="tg-j1i3">Date</th>
+            <th class="tg-j1i3">Date and Time</th>
             <th class="tg-j1i3">Transaction Description</th>
             <th class="tg-j1i3">Type</th>
-            <th class="tg-u1i3">Amount</th>
-            <th class="tg-ul38">Balance</th>
+            <th class="tg-j1i3 moneyHeader">Amount</th>
+            <th class="tg-j1i3 moneyHeader">Balance</th>
         </tr>
     </thead>
     <tbody>
@@ -120,10 +147,10 @@
             <td class="tg-0pky">
             @Html.DisplayFor(modelItem => item.Type)
             </td>
-            <td class="tg-0pky">
+            <td class="tg-money">
             @Html.DisplayFor(modelItem => item.Amount)
             </td>
-            <td class="tg-0pky">
+            <td class="tg-money">
             @Html.DisplayFor(modelItem => item.Balance_After)
             </td>
         </tr>
