@@ -5,10 +5,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Commerce_WebApp.Models
 {
-  [Keyless]
-  public class Customer_Account
+  public class Notification_Rule
   {
+    public int Id { get; set; }
     public string Customer_Id { get; set; }
-    public int Account_Id { get; set; }
+    public string Type { get; set; }
+    public string Condition { get; set; }
+
+    [Column(TypeName = "decimal(18,2)")]
+    public decimal Value { get; set; }
   }
 }
