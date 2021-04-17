@@ -32,7 +32,7 @@ namespace Commerce_WebApp.Controllers
             var Customer_Account = await _context.Customer_Account.FirstOrDefaultAsync(m => m.Customer_Id == userId && m.Account_Id == id);
             if (id == null || Customer_Account == null)
             {
-                return View(); // await _context.Financial_Transaction.FromSqlInterpolated($"ReturnAccounts {id}").ToListAsync()
+                return View(await _context.Account.FromSqlInterpolated($"ReturnAccounts {userId}").ToListAsync());
             }
 
             return View("Account", await _context.Financial_Transaction.FromSqlInterpolated($"ReturnTransactions {id}").ToListAsync());
