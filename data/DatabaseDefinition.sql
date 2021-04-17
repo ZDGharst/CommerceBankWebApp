@@ -62,6 +62,7 @@ CREATE TABLE [dbo].[Financial_Transaction] (
     [amount]        MONEY         NOT NULL,
     [balance_after] MONEY         NOT NULL,
     [description]   VARCHAR (100) NULL,
+    
     PRIMARY KEY CLUSTERED ([id] ASC),
     FOREIGN KEY ([account_id]) REFERENCES [dbo].[Account] ([id])
 );
