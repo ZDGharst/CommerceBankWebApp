@@ -23,16 +23,16 @@ namespace Commerce_WebApp.Controllers
 
         public async Task<IActionResult> Index(int? id)
         {
-            if (id == null)
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
             {
-                return View();
+                return View("RequireLogin");
             }
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var Customer_Account = await _context.Customer_Account.FirstOrDefaultAsync(m => m.Customer_Id == userId && m.Account_Id == id);
-            if (Customer_Account == null)
+            if (id == null || Customer_Account == null)
             {
-                return View();
+                return View(); // await _context.Financial_Transaction.FromSqlInterpolated($"ReturnAccounts {id}").ToListAsync()
             }
 
             return View("Account", await _context.Financial_Transaction.FromSqlInterpolated($"ReturnTransactions {id}").ToListAsync());
