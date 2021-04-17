@@ -1,9 +1,10 @@
+
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace DatabaseAdministration.Models
+namespace Commerce_WebApp.Models
 {
   [Keyless]
   public class Customer_Account

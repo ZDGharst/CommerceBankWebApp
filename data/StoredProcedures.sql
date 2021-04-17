@@ -7,7 +7,8 @@ DROP PROCEDURE IF EXISTS LoginNotification;
 /* Procedures that return data. */
 CREATE PROCEDURE ReturnTransactions @account_id INT
 AS
-SELECT id, account_id, timestamp, description, IIF(type = 'CR', 'Credit', 'Debit') as type, amount, balance_after FROM Financial_Transaction WHERE account_id = @account_id ORDER BY id DESC;
+SELECT id, account_id, timestamp, description, IIF(type = 'CR', 'Credit', 'Debit') as type, amount, balance_after
+FROM Financial_Transaction WHERE account_id = @account_id ORDER BY id DESC;
 
 CREATE PROCEDURE ReturnNotificationRules @UserName NVARCHAR(256)
 AS
@@ -17,14 +18,15 @@ SELECT NR.id, NR.customer_id, NR.type, NR.condition, NR.value, NR.notify_web, NR
     ORDER BY type;
 
 /* Procedures that create data. */
-CREATE PROCEDURE LoginNotification @customer_id VARCHAR(450)
+CREATE PROCEDURE LoginNotification @UserName VARCHAR(450)
 AS
 BEGIN
 	DECLARE @rule_id INT;
     
-    SELECT @rule_id = id
-    FROM Notification_Rule
-    WHERE customer_id = @customer_id AND type = "login";
+    SELECT @rule_id = NR.id
+        FROM Notification_Rule AS NR
+        INNER JOIN AspNetUsers AS USR ON NR.customer_id = USR.Id 
+        WHERE USR.UserName = @UserName AND type = "login";
 
     IF @rule_id IS NOT NULL
     BEGIN
