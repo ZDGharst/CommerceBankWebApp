@@ -15,6 +15,8 @@ namespace Commerce_WebApp.Data
         {
         }
 
+        public DbSet<Account> Account { get; set; }
+        public DbSet<Customer_Account> Customer_Account { get; set; }
         public DbSet<Financial_Transaction> Financial_Transaction { get; set; }
     }
 }

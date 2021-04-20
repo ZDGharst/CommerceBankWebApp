@@ -3,8 +3,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-using Commerce_WebApp.Data;
-
 namespace Commerce_WebApp.Models
 {
   public class Financial_Transaction
