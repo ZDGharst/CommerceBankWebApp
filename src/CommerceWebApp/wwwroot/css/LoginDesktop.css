@@ -1,0 +1,72 @@
+﻿.loginContainer {
+    margin: 50px auto 0 auto;
+    filter: drop-shadow(0 0 1rem #999999);
+    min-width: 200px;
+    min-height: 200px;
+    max-width: 500px;
+    max-height: 500px;
+}
+
+.loginInformation, .loginForm {
+    min-height: 200px;
+    max-height: 500px;
+}
+
+.loginInformation {
+    overflow: hidden;
+    position: relative;
+    background-color: #006747;
+    border-radius: 5px 5px 0 0;
+    padding: 40px;
+}
+
+.loginInformation-BG {
+    opacity: 0.1;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+
+.loginInformation-Content {
+    color: white;
+    position: relative;
+}
+
+.loginForm {
+    background-color: #f1f1f1;
+    font-size: 14px;
+    text-align: center;
+    padding: 50px 75px 50px 75px;
+}
+
+.loginForm-User, .loginForm-Pass {
+    text-align: left;
+    width: 90%;
+}
+
+.loginForm-User {
+    margin-bottom: 20px;
+}
+
+.loginForm-Pass {
+    margin-bottom: 20px;
+}
+
+.loginInformation-Label, .loginForm-Label {
+    font-size: 22px;
+    text-align: center;
+    width: 100%;
+}
+
+.loginForm-Show {
+    margin-top: 5px;
+}
+
+.loginPartitionLine {
+    text-align: center;
+    background-color: darkgray;
+    height: 1px;
+    width: 100%;
+    margin-bottom: 25px;
+}

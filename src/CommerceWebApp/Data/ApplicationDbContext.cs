@@ -16,5 +16,9 @@ namespace Commerce_WebApp.Data
         }
 
         public DbSet<Financial_Transaction> Financial_Transaction { get; set; }
+
+        public DbSet<Notification> Notification { get; set; }
+
+        public DbSet<Notification_Rule> Notification_Rule { get; set; }
     }
 }
