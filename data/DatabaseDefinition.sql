@@ -10,7 +10,7 @@ USE CommerceBank_TransactionDB;
  * TODO: Replace grants for select/update/insert with stored procedures once they are created. */
 -- CREATE LOGIN CommerceWebAppCustomer WITH PASSWORD = "";
 -- CREATE USER CommerceWebAppCustomer FOR LOGIN CommerceWebAppCustomer;
--- GRANT SELECT, UPDATE, INSERT TO CommerceWebAppCustomer;
+-- GRANT SELECT, UPDATE, INSERT, EXEC TO CommerceWebAppCustomer;
 
 /* Drop tables in order of foreign key dependencies. */
 DROP TABLE IF EXISTS Notification;
@@ -62,16 +62,20 @@ CREATE TABLE [dbo].[Financial_Transaction] (
     [amount]        MONEY         NOT NULL,
     [balance_after] MONEY         NOT NULL,
     [description]   VARCHAR (100) NULL,
+    
     PRIMARY KEY CLUSTERED ([id] ASC),
     FOREIGN KEY ([account_id]) REFERENCES [dbo].[Account] ([id])
 );
 
 CREATE TABLE [dbo].[Notification_Rule] (
-    [id]          INT            IDENTITY(1, 1),
-    [customer_id] NVARCHAR (450) NOT NULL,
-    [type]        VARCHAR (32)   NOT NULL,
-    [condition]   VARCHAR (32)   NULL,
-    [value]       DECIMAL (18)   NULL,
+    [id]           /INT            IDENTITY(1, 1),
+    [customer_id]  NVARCHAR (450) NOT NULL,
+    [type]         VARCHAR (32)   NOT NULL,
+    [condition]    VARCHAR (5)   NULL,
+    [value]        DECIMAL (18)   NULL,
+    [notify_text]  BIT            NOT NULL,
+    [notify_email] BIT            NOT NULL,
+    [notify_web]   BIT            NOT NULL,
 
     PRIMARY KEY CLUSTERED ([id] ASC),
     FOREIGN KEY ([customer_id]) REFERENCES [dbo].[AspNetUsers] ([Id])

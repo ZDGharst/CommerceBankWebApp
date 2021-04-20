@@ -1,0 +1,57 @@
+﻿/* MAIN */
+.rule-container {
+    background-color: #f1f1f1;
+    margin: 50px auto 0 auto;
+    padding: 25px;
+    border-radius: 10px;
+    filter: drop-shadow(0 0 1rem #999999);
+}
+
+.loginPartitionLine {
+    text-align: center;
+    background-color: darkgray;
+    height: 1px;
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+/* NAVBAR */
+.nav-tabs .nav-link {
+    background-color: #588E7D;
+    color: white;
+    margin-right: 5px;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #006747;
+    color: white;
+}
+
+/* CONDITIONS */
+.condition-container {
+    background-color: white;
+    padding: 25px;
+    text-align: left;
+}
+
+.condition-input {
+    vertical-align: top;
+    margin-bottom: 30px;
+}
+
+.method-checkbox-container {
+    margin-bottom: 30px;
+}
+
+.add-button {
+}
+
+/* RULE TABLE */
+.table-container {
+    background-color: white;
+    margin: 25px auto 0 auto;
+    padding: 25px;
+    border-radius: 10px;
+}
+
+
