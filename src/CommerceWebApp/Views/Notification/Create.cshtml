@@ -1,0 +1,201 @@
+﻿@model Commerce_WebApp.Models.Notification_Rule
+@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<link rel="stylesheet" href="~/css/NotificationManagement.css" />
+
+@if (SignInManager.IsSignedIn(User))
+{
+<div class="rule-container">
+
+    <!-- Rule Navigation -->
+    <ul class="nav nav-tabs" id="rule-tab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="balance-tab" data-toggle="tab" href="#balance" role="tab" aria-controls="balance" aria-selected="true">Balance</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="withdrawal-tab" data-toggle="tab" href="#withdrawal" role="tab" aria-controls="withdrawal" aria-selected="false">Withdrawal</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="deposit-tab" data-toggle="tab" href="#deposit" role="tab" aria-controls="deposit" aria-selected="false">Deposit</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="login-tab" data-toggle="tab" href="#login" role="tab" aria-controls="login" aria-selected="false">Login</a>
+        </li>
+    </ul>
+    <!-- /Rule Navigation-->
+    <!-- Rule Configuration -->
+    <div class="tab-content" id="pills-tabContent">
+        <!-- Balance Condition -->
+        <form asp-action="Create" class="condition-container tab-pane fade show active" id="balance" role="tabpanel" aria-labelledby="balance-tab">
+            <input asp-for="Type" type="hidden" value="Balance" />
+
+            <div class="form-group">
+                <label>Notify me when my balance goes... </label><br />
+                <select class="btn btn-secondary" style="float: left; margin-right: 15px; display: block;" id="Condition" name="Condition">
+                    <option value="Above" class="btn btn-light">Above</option>
+                    <option value="Below" class="btn btn-light">Below</option>
+                </select>
+                <input asp-for="Value" type="number" value="0.00" class="condition-input form-control" style="width: 150px; margin-left: 20px;" min="0.00" max="10000.00" step="0.01" />
+                <span asp-validation-for="Value" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Message">Using the message: </label>
+                <textarea asp-for="Message" class="condition-input form-control" placeholder="Whatever you put here will display when this rule is triggered!"></textarea>
+                <span asp-validation-for="Message" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Receive notification using: </label>
+                <br />
+
+                <input asp-for="Notify_Web" />
+                <label asp-for="Notify_Web">Web Notification</label>
+                <br />
+
+                <input asp-for="Notify_Email" />
+                <label asp-for="Notify_Email">Email Notification</label>
+                <br />
+
+                <input asp-for="Notify_Text" />
+                <label asp-for="Notify_Text">SMS Notification</label>
+                <br />
+            </div>
+
+            <button type="submit" value="Create" class="add-button btn btn-primary" style="background-color: #006747;">Add Rule</button>
+        </form>
+        <!-- /Balance Condition-->
+        <!-- Withdrawal Condition -->
+        <form asp-action="Create" class="condition-container tab-pane fade" id="withdrawal" role="tabpanel" aria-labelledby="withdrawal-tab">
+            <input asp-for="Type" type="hidden" value="Withdrawal" />
+
+            <div class="form-group">
+                <label>Notify me when a withdrawal is made... </label><br />
+                <select class="btn btn-secondary" style="float: left; margin-right: 15px; display: block;" id="Condition" name="Condition">
+                    <option value="Above" class="btn btn-light">Above</option>
+                    <option value="Below" class="btn btn-light">Below</option>
+                </select>
+                <input asp-for="Value" type="number" value="0.00" class="condition-input form-control" style="width: 150px; margin-left: 20px;" min="0.01" max="10000.00" step="0.01" />
+                <span asp-validation-for="Value" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Message">Using the message: </label>
+                <textarea asp-for="Message" class="condition-input form-control" placeholder="Whatever you put here will display when this rule is triggered!"></textarea>
+                <span asp-validation-for="Message" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Receive notification using: </label>
+                <br />
+
+                <input asp-for="Notify_Web" />
+                <label asp-for="Notify_Web">Web Notification</label>
+                <br />
+
+                <input asp-for="Notify_Email" />
+                <label asp-for="Notify_Email">Email Notification</label>
+                <br />
+
+                <input asp-for="Notify_Text" />
+                <label asp-for="Notify_Text">SMS Notification</label>
+                <br />
+            </div>
+
+            <button type="submit" value="Create" class="add-button btn btn-primary" style="background-color: #006747;">Add Rule</button>
+        </form>
+        <!-- /Withdrawal Condition -->
+        <!-- Deposit Condition -->
+        <form asp-action="Create" class="condition-container tab-pane fade" id="deposit" role="tabpanel" aria-labelledby="deposit-tab">
+            <input asp-for="Type" type="hidden" value="Deposit" />
+
+            <div class="form-group">
+                <label>Notify me when a deposit is made... </label><br />
+                <select class="btn btn-secondary" style="float: left; margin-right: 15px; display: block;" id="Condition" name="Condition">
+                    <option value="Above" class="btn btn-light">Above</option>
+                    <option value="Below" class="btn btn-light">Below</option>
+                </select>
+                <input asp-for="Value" type="number" value="0.00" class="condition-input form-control" style="width: 150px; margin-left: 20px;" min="0.01" max="10000.00" step="0.01" />
+                <span asp-validation-for="Value" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Message">Using the message: </label>
+                <textarea asp-for="Message" class="condition-input form-control" placeholder="Whatever you put here will display when this rule is triggered!"></textarea>
+                <span asp-validation-for="Message" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Receive notification using: </label>
+                <br />
+
+                <input asp-for="Notify_Web" />
+                <label asp-for="Notify_Web">Web Notification</label>
+                <br />
+
+                <input asp-for="Notify_Email" />
+                <label asp-for="Notify_Email">Email Notification</label>
+                <br />
+
+                <input asp-for="Notify_Text" />
+                <label asp-for="Notify_Text">SMS Notification</label>
+                <br />
+            </div>
+
+            <button type="submit" value="Create" class="add-button btn btn-primary" style="background-color: #006747;">Add Rule</button>
+        </form>
+        <!-- /Deposit Condition -->
+        <!-- Login Condition -->
+        <form asp-action="Create" class="condition-container tab-pane fade" id="login" role="tabpanel" aria-labelledby="login-tab">
+            <input asp-for="Type" type="hidden" value="Login" />
+            <input asp-for="Condition" type="hidden" value="NA" />
+            <input asp-for="Value" type="hidden" value="0.00" />
+
+            <div class="form-group">
+                <label asp-for="Message">Alert me whenever my account is signed into using the message: </label>
+                <textarea asp-for="Message" class="condition-input form-control" placeholder="Whatever you put here will display when this rule is triggered!"></textarea>
+                <span asp-validation-for="Message" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Receive notification using: </label>
+                <br />
+
+                <input asp-for="Notify_Web" />
+                <label asp-for="Notify_Web">Web Notification</label>
+                <br />
+
+                <input asp-for="Notify_Email" />
+                <label asp-for="Notify_Email">Email Notification</label>
+                <br />
+
+                <input asp-for="Notify_Text" />
+                <label asp-for="Notify_Text">SMS Notification</label>
+                <br />
+            </div>
+
+            <button type="submit" value="Create" class="add-button btn btn-primary" style="background-color: #006747;">Add Rule</button>
+        </form>
+            <!-- /Login Condition -->
+
+</div>
+    <!-- /Rule Configuraiton -->
+
+    <div>
+        <a asp-action="Manage">Back to Notification Rules</a>
+    </div>
+
+</div>
+}
+
+else
+{
+<p>You must be <a asp-area="Identity" asp-page="/Account/Login">logged in</a> to view this resource.</p>
+}
