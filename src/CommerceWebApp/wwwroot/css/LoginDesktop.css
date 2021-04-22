@@ -1,6 +1,48 @@
-﻿.loginContainer {
+﻿/* FONT */
+@font-face {
+    font-family: OpenSans;
+    src: url("font/OpenSans-Light.ttf");
+}
+
+@font-face {
+    font-family: OpenSans;
+    font-weight: 500;
+    src: url("font/OpenSans-Regular.ttf")
+}
+
+@font-face {
+    font-family: OpenSans;
+    font-weight: bold;
+    src: url("font/OpenSans-Bold.ttf")
+}
+
+@font-face {
+    font-family: Poppins;
+    src: url("font/Poppins-Regular.ttf");
+}
+
+@font-face {
+    font-family: Poppins;
+    font-weight: bold;
+    src: url("font/Poppins-Medium.ttf");
+}
+
+body {
+    font-family: OpenSans;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Poppins;
+}
+
+a {
+    font-family: OpenSans;
+}
+
+/* MAIN */
+.loginContainer {
     margin: 50px auto 0 auto;
-    filter: drop-shadow(0 0 1rem #999999);
+    filter: drop-shadow(0 0 .3rem #BBBBBB);
     min-width: 200px;
     min-height: 200px;
     max-width: 500px;
@@ -34,7 +76,7 @@
 }
 
 .loginForm {
-    background-color: #f1f1f1;
+    background-color: #faf9f7;
     font-size: 14px;
     text-align: center;
     padding: 50px 75px 50px 75px;
@@ -69,4 +111,8 @@
     height: 1px;
     width: 100%;
     margin-bottom: 25px;
+}
+
+.action-danger, text-danger {
+    color: #E30000;
 }
