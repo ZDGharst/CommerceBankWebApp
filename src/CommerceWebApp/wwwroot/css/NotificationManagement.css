@@ -91,6 +91,14 @@ a {
 }
 
 /* RULE TABLE */
+tr {
+    width: 20%;
+}
+
+.col-value {
+
+}
+
 .table-container {
     background-color: white;
     margin: 25px auto 0 auto;

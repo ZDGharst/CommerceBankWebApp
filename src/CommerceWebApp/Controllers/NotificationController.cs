@@ -159,5 +159,93 @@ namespace Commerce_WebApp.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Manage");
         }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var notification_Rule = await _context.Notification_Rule
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (notification_Rule == null)
+            {
+                return NotFound();
+            }
+
+            return View(notification_Rule);
+        }
+
+        [HttpPost, ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditConfirmed(Notification_Rule notification_Rule, int id)
+        {
+            var param = new SqlParameter[] {
+                        new SqlParameter() {
+                            ParameterName = "@id",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = id
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@customer_id",
+                            SqlDbType =  System.Data.SqlDbType.NVarChar,
+                            Size = 450,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@type",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Size = 32,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = notification_Rule.Type
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@condition",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Size = 32,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = notification_Rule.Condition
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@value",
+                            SqlDbType =  System.Data.SqlDbType.Decimal,
+                            /*Precision = 18,
+                            Scale = 2,*/
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = notification_Rule.Value
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@notify_text",
+                            SqlDbType =  System.Data.SqlDbType.Bit,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = notification_Rule.Notify_Text
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@notify_email",
+                            SqlDbType =  System.Data.SqlDbType.Bit,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = notification_Rule.Notify_Email
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@notify_web",
+                            SqlDbType =  System.Data.SqlDbType.Bit,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = notification_Rule.Notify_Web
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@message",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Size = 300,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = notification_Rule.Message
+                        }};
+
+            await _context.Database.ExecuteSqlRawAsync("[dbo].[EditNotificationRule] @id, @customer_id, @type, @condition, @value, @notify_text, @notify_email, @notify_web, @message", param);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Manage");
+        }
     }
 }

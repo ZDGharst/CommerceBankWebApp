@@ -21,9 +21,9 @@
                     <thead>
                         <tr>
                             <th style="text-align: left;" scope="col">Actions</th>
+                            <th style="text-align: right; padding-right: 100px" scope="col">Value</th>
                             <th style="text-align: left;" scope="col">Type</th>
                             <th style="text-align: left;" scope="col">Condition</th>
-                            <th style="text-align: left;" scope="col">Value</th>
                             <th style="text-align: left;" scope="col">Notify Method(s)</th>
                         </tr>
                     </thead>
@@ -33,8 +33,22 @@
                         {
                             <tr>
                                 <td style="text-align: left;">
-                                    <a asp-action="Delete" asp-route-id="@item.Id" style="color:#E30000">Delete</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" style="color:#E30000">Delete</a> <br />
+                                    <a asp-action="Edit" asp-route-id="@item.Id" style="color:#007AA3">Modify</a>
                                 </td>
+
+                                @if (item.Type.ToString() == "Login")
+                                {
+                                    <td class="col-value" style="text-align: right; padding-right: 100px">
+                                        ---
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td style="text-align: right; padding-right: 100px">
+                                        $@Html.DisplayFor(modelItem => item.Value)
+                                    </td>
+                                }
 
                                 <td style="text-align: left;">
                                     @Html.DisplayFor(modelItem => item.Type)
@@ -50,19 +64,6 @@
                                 {
                                     <td style="text-align: left;">
                                         @Html.DisplayFor(modelItem => item.Condition)
-                                    </td>
-                                }
-
-                                @if (item.Type.ToString() == "Login")
-                                {
-                                    <td style="text-align: left;">
-                                        ---
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td style="text-align: left;">
-                                        $@Html.DisplayFor(modelItem => item.Value)
                                     </td>
                                 }
 
