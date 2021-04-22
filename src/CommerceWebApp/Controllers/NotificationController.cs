@@ -86,8 +86,8 @@ namespace Commerce_WebApp.Controllers
                         new SqlParameter() {
                             ParameterName = "@value",
                             SqlDbType =  System.Data.SqlDbType.Decimal,
-                            Precision = 18,
-                            Scale = 2,
+                            /*Precision = 18,
+                            Scale = 2,*/
                             Direction = System.Data.ParameterDirection.Input,
                             Value = notification_Rule.Value
                         },
