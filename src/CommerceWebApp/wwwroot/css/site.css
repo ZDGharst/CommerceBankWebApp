@@ -7,9 +7,38 @@ a.navbar-brand {
   word-break: break-all;
 }
 
+header {
+    /* slight off-white background for header to differentiate from rest of page */
+    background-color: #faf9f7;
+}
+
 /* Provide sufficient contrast against white background */
 a {
   color: #0366d6;
+}
+
+/* Give visual feedback when hovering on nav bar choices */
+.navbar-nav > li > a:hover {
+    border-bottom: 3px solid #4FA800;
+    font-weight: 550;
+}
+
+/* Give visual feedback for logout button */
+.navbar-nav > li > form > button:hover {
+    border-bottom: 3px solid #4FA800;
+    font-weight: 550;
+}
+
+/* Change font and setup bottom border for visual feedback on logout button */
+.navbar-nav > li > form > button {
+    border-bottom: 3px solid transparent;
+    font-family: Poppins, Open Sans, sans-serif;
+}
+
+/* Change font and setup bottom border for visual feedback on navbar */
+.navbar-nav > li > a {
+    border-bottom: 3px solid transparent;
+    font-family: Poppins, Open Sans, sans-serif;
 }
 
 .btn-primary {
