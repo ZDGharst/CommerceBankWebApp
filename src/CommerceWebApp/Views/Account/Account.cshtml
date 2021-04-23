@@ -6,25 +6,27 @@
 <style type="text/css">
     /* table */
     .tg {
-        border-collapse: separate;
+        border-collapse: collapse;
         border-spacing: 0;
     }
 
+    .tg tr {
+        margin: 1px 0;
+    }
+
         .tg td {
-            border-bottom: 3px solid #007AA3;
-            border-right: 3px solid #007AA3;
+            border-bottom: 2px solid #007AA3;
             font-family: Arial, sans-serif;
             font-size: 14px;
             overflow: hidden;
-            padding: 14px 20px;
+            padding: 5px 20px;
             word-break: normal;
             background-color: #faf9f7;
         }
 
         .tg th {
-            border-top: 3px solid #006747;
-            border-bottom: 3px solid #006747;
-            border-right: 3px solid #006747;
+            border-bottom: 7px solid #006747;
+            border-top: 5px solid #006747;
             font-family: Arial, sans-serif;
             font-size: 14px;
             font-weight: 550;
@@ -50,16 +52,6 @@
             vertical-align: top;
             will-change: transform;
             background-color: #4FA800;
-        }
-
-        /* apply left border for th */
-        .tg th:first-child {
-            border-left: 3px solid #006747;
-        }
-
-        /* apply left border for td */
-        .tg td:first-child {
-            border-left: 3px solid #007AA3;
         }
 
         /* table alphanumeric item */
@@ -127,7 +119,7 @@
 </style>
 <table id="tg-hh5Z3" class="tg" width="100%">
     <thead>
-        <tr>
+        <tr class="first">
             <th class="tg-j1i3">Date and Time</th>
             <th class="tg-j1i3">Transaction Description</th>
             <th class="tg-j1i3">Type</th>
