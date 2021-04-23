@@ -46,9 +46,15 @@ BEGIN
     END
 END
 
-CREATE PROCEDURE AddNotificationRule @customer_id NVARCHAR(450), @type VARCHAR(32),
-    @condition VARCHAR(32), @value DECIMAL(18, 0), @notify_text BIT, @notify_email BIT,
-    @notify_web BIT, @message VARCHAR(300)
+CREATE PROCEDURE AddNotificationRule
+    @customer_id NVARCHAR(450),
+    @type VARCHAR(32),
+    @condition VARCHAR(32),
+    @value DECIMAL(18, 0),
+    @notify_text BIT,
+    @notify_email BIT,
+    @notify_web BIT,
+    @message VARCHAR(300)
 AS
 BEGIN
     IF (@type = 'Login' OR @type = 'Balance' OR @type = 'Withdrawal' OR @type = 'Deposit') AND
@@ -66,4 +72,38 @@ BEGIN
                 VALUES (@customer_id, @type, @condition, @value, @notify_text, @notify_email,
                 @notify_web, @message);
     END
+END
+
+CREATE PROCEDURE AddFinancialTransaction
+    @account_id INT,
+    @type VARCHAR(2),
+    @amount MONEY,
+    @description VARCHAR(100)
+AS
+BEGIN
+    DECLARE @new_balance MONEY;
+
+    IF (@type = 'CR')
+        BEGIN
+        UPDATE Account
+            SET balance = balance + @amount, @new_balance = balance + @amount
+            WHERE id = @account_id;
+        END
+    ELSE
+        BEGIN
+        UPDATE Account
+            SET balance = balance - @amount, @new_balance = balance - @amount
+            WHERE id = @account_id;
+        END
+
+    INSERT INTO Financial_Transaction
+        (account_id, timestamp, type, amount, balance_after, description)
+    VALUES (
+        @account_id,
+        GETDATE(),
+        @type,
+        @amount,
+        @new_balance,
+        @description
+    );
 END
