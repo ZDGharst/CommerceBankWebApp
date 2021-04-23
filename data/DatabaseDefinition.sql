@@ -1,13 +1,9 @@
 /* This file contains the SQL to create the database from scratch. Anyone who uses this file should
  * end up on the same schema as the database in production, but without the content. Before running
- * this, get the password from the environment variables for the user created below. 
- * 
- * TODO: -Add the hashing algorithm to the password column once the log in form is ready. 
- *       -Add additional users other than the SA in order to encapsulate data. */
+ * this, get the password from the environment variables for the user created below. */
 USE CommerceBank_TransactionDB;
 
-/* Create the web viewer user and grant it permissions for stored procedures. Insert password in quotes.
- * TODO: Replace grants for select/update/insert with stored procedures once they are created. */
+/* Create the web viewer user and grant it permissions for stored procedures. Insert password in quotes. */
 -- CREATE LOGIN CommerceWebAppCustomer WITH PASSWORD = "";
 -- CREATE USER CommerceWebAppCustomer FOR LOGIN CommerceWebAppCustomer;
 -- GRANT SELECT, UPDATE, INSERT, EXEC TO CommerceWebAppCustomer;
@@ -68,18 +64,18 @@ CREATE TABLE [dbo].[Financial_Transaction] (
 );
 
 CREATE TABLE [dbo].[Notification_Rule] (
-    [id]           /INT            IDENTITY(1, 1),
+    [id]           /INT           IDENTITY(1, 1),
     [customer_id]  NVARCHAR (450) NOT NULL,
     [type]         VARCHAR (32)   NOT NULL,
-    [condition]    VARCHAR (5)   NULL,
-    [value]        DECIMAL (18)   NULL,
+    [condition]    VARCHAR (5)    NOT NULL,
+    [value]        DECIMAL (18)   NOT NULL,
     [notify_text]  BIT            NOT NULL,
     [notify_email] BIT            NOT NULL,
     [notify_web]   BIT            NOT NULL,
+    [message]      VARCHAR(300)   NULL,
 
     PRIMARY KEY CLUSTERED ([id] ASC),
     FOREIGN KEY ([customer_id]) REFERENCES [dbo].[AspNetUsers] ([Id])
-);
 
 CREATE TABLE [dbo].[Notification] (
     [id]                INT           IDENTITY(1, 1),
@@ -88,8 +84,12 @@ CREATE TABLE [dbo].[Notification] (
     [message]           VARCHAR (150) NULL,
 
     PRIMARY KEY CLUSTERED ([id] ASC),
-    FOREIGN KEY ([transaction_id]) REFERENCES [dbo].[Financial_Transaction] ([id]),
-    FOREIGN KEY ([notification_rule]) REFERENCES [dbo].[Notification_Rule] ([id])
+    ADD CONSTRAINT FK_Notification_FinancialTransaction
+        FOREIGN KEY ([transaction_id]) REFERENCES [dbo].[Financial_Transaction] ([id])
+        ON DELETE CASCADE,
+    ADD CONSTRAINT FK_Notification_NotificationRule
+        FOREIGN KEY ([notification_rule]) REFERENCES [dbo].[Notification_Rule] ([id])
+        ON DELETE CASCADE
 );
 
 /* Insert initial customer and account. */ 
