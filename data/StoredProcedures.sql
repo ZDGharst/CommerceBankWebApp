@@ -24,6 +24,14 @@ SELECT NR.id, NR.customer_id, NR.type, NR.condition, NR.value, NR.notify_web, NR
     INNER JOIN AspNetUsers AS USR ON NR.customer_id = USR.Id 
     WHERE USR.UserName = @UserName
     ORDER BY type;
+    
+CREATE PROCEDURE ReturnUnreadNotifications @UserName NVARCHAR(256)
+AS
+SELECT N.id, N.transaction_id, N.notification_rule, N.message FROM Notification as N
+	INNER JOIN Notification_Rule AS NR ON N.notification_rule = NR.id
+    INNER JOIN AspNetUsers AS USR ON NR.customer_id = USR.Id 
+    WHERE USR.UserName = @UserName AND read_by_user = 0
+    ORDER BY N.id DESC;
 
 /* Procedures that create data. */
 CREATE PROCEDURE LoginNotification @UserName NVARCHAR(256)
