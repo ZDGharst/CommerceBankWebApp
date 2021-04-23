@@ -81,6 +81,7 @@ CREATE TABLE [dbo].[Notification] (
     [id]                INT           IDENTITY(1, 1),
     [transaction_id]    INT           NULL,
     [notification_rule] INT           NOT NULL,
+    [read]              BIT           NULL,
     [message]           VARCHAR (150) NULL,
 
     PRIMARY KEY CLUSTERED ([id] ASC),

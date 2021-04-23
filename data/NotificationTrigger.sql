@@ -51,20 +51,22 @@ BEGIN
 			BEGIN
 				IF @condition = "below" AND @value >= @inserted_balance_after
 				BEGIN
-					INSERT INTO Notification (transaction_id, notification_rule, message)
+					INSERT INTO Notification (transaction_id, notification_rule, read_by_user, message)
 					VALUES (
 						@inserted_id,
 						@id,
+						0,
 						"The balance in one of your accounts is $" + LTRIM(STR(@inserted_balance_after)) +
 						", which is below your low balance threshold of $" + LTRIM(STR(@value)) + "."
 					);
 				END
 				IF @condition = "above" AND @value <= @inserted_balance_after
 				BEGIN
-					INSERT INTO Notification (transaction_id, notification_rule, message)
+					INSERT INTO Notification (transaction_id, notification_rule, read_by_user, message)
 					VALUES (
 						@inserted_id,
 						@id,
+						0,
 						"The balance in one of your accounts is $" + LTRIM(STR(@inserted_balance_after)) +
 						", which is above your high balance threshold of $" + LTRIM(STR(@value)) + "."
 					);
@@ -75,20 +77,22 @@ BEGIN
 			BEGIN
 				IF @condition = "below" AND @value >= @inserted_amount
 				BEGIN
-					INSERT INTO Notification (transaction_id, notification_rule, message)
+					INSERT INTO Notification (transaction_id, notification_rule, read_by_user, message)
 					VALUES (
 						@inserted_id,
 						@id,
+						0,
 						"A debit was posted in one of your accounts worth $" + LTRIM(STR(@inserted_amount)) +
 						", which is below your withdrawal notification threshold of $" + LTRIM(STR(@value)) + "."
 					);
 				END
 				IF @condition = "above" AND @value <= @inserted_amount
 				BEGIN
-					INSERT INTO Notification (transaction_id, notification_rule, message)
+					INSERT INTO Notification (transaction_id, notification_rule, read_by_user, message)
 					VALUES (
 						@inserted_id,
 						@id,
+						0,
 						"A debit was posted in one of your accounts worth $" + LTRIM(STR(@inserted_amount)) +
 						", which is above your withdrawal notification threshold of $" + LTRIM(STR(@value)) + "."
 					);
@@ -99,20 +103,22 @@ BEGIN
 			BEGIN
 				IF @condition = "below" AND @value >= @inserted_amount
 				BEGIN
-					INSERT INTO Notification (transaction_id, notification_rule, message)
+					INSERT INTO Notification (transaction_id, notification_rule, read_by_user, message)
 					VALUES (
 						@inserted_id,
 						@id,
+						0,
 						"A credit was posted in one of your accounts worth $" + LTRIM(STR(@inserted_amount)) +
 						", which is below your deposit notification threshold of $" + LTRIM(STR(@value)) + "."
 					);
 				END
 				IF @condition = "above" AND @value <= @inserted_amount
 				BEGIN
-					INSERT INTO Notification (transaction_id, notification_rule, message)
+					INSERT INTO Notification (transaction_id, notification_rule, read_by_user, message)
 					VALUES (
 						@inserted_id,
 						@id,
+						0,
 						"A credit was posted in one of your accounts worth $" + LTRIM(STR(@inserted_amount)) +
 						", which is above your deposit notification threshold of $" + LTRIM(STR(@value)) + "."
 					);

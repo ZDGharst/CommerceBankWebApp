@@ -30,17 +30,19 @@ CREATE PROCEDURE LoginNotification @UserName NVARCHAR(256)
 AS
 BEGIN
 	DECLARE @rule_id INT;
+	DECLARE @read_bit BIT;
     
-    SELECT @rule_id = NR.id
+    SELECT @rule_id = NR.id, @read_bit = NR.notify_web
         FROM Notification_Rule AS NR
         INNER JOIN AspNetUsers AS USR ON NR.customer_id = USR.Id 
         WHERE USR.UserName = @UserName AND type = "Login";
 
     IF @rule_id IS NOT NULL
     BEGIN
-        INSERT INTO Notification (notification_rule, message)
+        INSERT INTO Notification (notification_rule, read_by_user, message)
         VALUES (
             @rule_id,
+            ~@read_bit,
             "A new login on your customer account occured on " + CONVERT(VARCHAR, GETDATE(), 1) + " at " + CONVERT(VARCHAR, GETDATE(), 8) + "."
         );
     END
