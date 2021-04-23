@@ -26,7 +26,7 @@ namespace Commerce_WebApp.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId == null)
             {
-                return View("RequireLogin");
+                return RedirectToAction("Login", "Login");
             }
 
             var Customer_Account = await _context.Customer_Account.FirstOrDefaultAsync(m => m.Customer_Id == userId && m.Account_Id == id);

@@ -10,6 +10,8 @@
 {
     <p>Welcome, @User.Identity.Name.</p>
 }
+@* This should never happen, because the controller checks to see if the user is logged in. However, it's nearly
+free to leave it here just in case something goes wrong. *@
 else
 {
     <p>Welcome, please log in to continue.</p>
