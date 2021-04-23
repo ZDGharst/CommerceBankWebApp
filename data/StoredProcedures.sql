@@ -13,7 +13,7 @@ SELECT id, account_type, balance, nickname, interest_rate FROM Account
 	WHERE Customer_Account.customer_id = @CustomerId
 	ORDER BY id ASC;
 
-CREATE PROCEDURE ReturnTransactions @UserName INT
+CREATE PROCEDURE ReturnTransactions @account_id INT
 AS
 SELECT id, account_id, timestamp, description, IIF(type = 'CR', 'Credit', 'Debit') as type, amount, balance_after
 FROM Financial_Transaction WHERE account_id = @account_id ORDER BY id DESC;
@@ -26,7 +26,7 @@ SELECT NR.id, NR.customer_id, NR.type, NR.condition, NR.value, NR.notify_web, NR
     ORDER BY type;
 
 /* Procedures that create data. */
-CREATE PROCEDURE LoginNotification @Customer_ID NVARCHAR(256)
+CREATE PROCEDURE LoginNotification @UserName NVARCHAR(256)
 AS
 BEGIN
 	DECLARE @rule_id INT;
