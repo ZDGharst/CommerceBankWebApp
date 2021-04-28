@@ -23,7 +23,7 @@ AS
 SELECT NR.id, NR.customer_id, NR.type, NR.condition, NR.value, NR.notify_web, NR.notify_email, NR.notify_text, NR.message FROM Notification_Rule AS NR
     INNER JOIN AspNetUsers AS USR ON NR.customer_id = USR.Id 
     WHERE USR.UserName = @UserName
-    ORDER BY type;
+    ORDER BY type, condition;
     
 CREATE PROCEDURE ReturnUnreadNotifications @UserName NVARCHAR(256)
 AS
@@ -56,32 +56,15 @@ BEGIN
     END
 END
 
-CREATE PROCEDURE AddNotificationRule
-    @customer_id NVARCHAR(450),
-    @type VARCHAR(32),
-    @condition VARCHAR(32),
-    @value DECIMAL(18, 0),
-    @notify_text BIT,
-    @notify_email BIT,
-    @notify_web BIT,
-    @message VARCHAR(300)
+CREATE PROCEDURE AddNotificationRule @customer_id NVARCHAR(450), @type VARCHAR(32), @condition VARCHAR(32), @value DECIMAL(18, 2), @notify_text BIT, @notify_email BIT, @notify_web BIT, @message VARCHAR(300)
 AS
 BEGIN
     IF (@type = 'Login' OR @type = 'Balance' OR @type = 'Withdrawal' OR @type = 'Deposit') AND
-        (@condition = 'Above' OR @condition = 'Over' OR @condition = 'NA') AND
-        (@value >= 0.00) BEGIN
-        IF (@message IS NULL) 
-            INSERT INTO Notification_Rule (customer_id, type, condition, value, notify_text,
-                notify_email, notify_web, message)
-                VALUES (@customer_id, @type, @condition, @value, @notify_text, @notify_email,
-                @notify_web, 'Your notification rule "' + @type + ' ' + @condition + ' ' +
-                CONVERT(VARCHAR, @value) + '" has been triggered!');
-        ELSE 
-            INSERT INTO Notification_Rule (customer_id, type, condition, value, notify_text,
-                notify_email, notify_web, message)
-                VALUES (@customer_id, @type, @condition, @value, @notify_text, @notify_email,
-                @notify_web, @message);
-    END
+        (@condition = 'Above' OR @condition = 'Below' OR @condition = 'NA') 
+        BEGIN
+            INSERT INTO Notification_Rule (customer_id, type, condition, value, notify_text, notify_email, notify_web, message)
+                VALUES (@customer_id, @type, @condition, @value, @notify_text, @notify_email, @notify_web, 'Your notification rule "' + @type + ' ' + @condition + ' $' + CONVERT(VARCHAR, @value) + '" has been triggered!');
+        END
 END
 
 CREATE PROCEDURE AddFinancialTransaction
@@ -116,4 +99,27 @@ BEGIN
         @new_balance,
         @description
     );
+END
+
+/* Stored procedures that modify data. */
+CREATE PROCEDURE DelNotificationRule @id INT
+AS
+BEGIN
+    DELETE FROM Notification_Rule 
+        WHERE id = @id;
+END
+
+CREATE PROCEDURE EditNotificationRule @id INT, @customer_id NVARCHAR(450), @type VARCHAR(32), @condition VARCHAR(32), @value DECIMAL(18, 2), @notify_text BIT, @notify_email BIT, @notify_web BIT, @message VARCHAR(300)
+AS
+BEGIN
+    UPDATE Notification_Rule
+        SET
+            type = @type,
+            condition = @condition,
+            value = @value,
+            notify_text = @notify_text,
+            notify_email = @notify_email,
+            notify_web = @notify_web
+        WHERE
+            id = @id AND customer_id=@customer_id;
 END
