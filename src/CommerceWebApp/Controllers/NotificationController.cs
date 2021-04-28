@@ -56,7 +56,7 @@ namespace Commerce_WebApp.Controllers
                     notification_Rule.Value = 0;
                 }
 
-                if (notification_Rule.Message == null)
+                if (notification_Rule.Message == null || notification_Rule.Message.ToString() == "")
                 {
                     notification_Rule.Message = "NA";
                 }
