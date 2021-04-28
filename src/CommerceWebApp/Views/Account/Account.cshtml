@@ -8,6 +8,7 @@
     .tg {
         border-collapse: collapse;
         border-spacing: 0;
+        margin: 15px 0;
     }
 
     .tg tr {
@@ -117,6 +118,31 @@
         border-width: 5px 5px 0
     }
 </style>
+<form asp-action="Index" asp-controller="Account" class="form-horizontal">
+    <div class="form-row align-items-center" style="justify-content: center;">
+        <input type="hidden" name="id" value="211111110">
+        <div class="col-auto">
+            <input type="text" class="form-control" name="description" placeholder="Description" required>
+        </div>
+        <div class="col-auto">
+            <input type="number" min="0.01" name="amount" step="any" class="form-control" placeholder="Amount" required>
+        </div>
+        <div class="col-auto">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="Type" id="Type1" value="DR" checked>
+                <label class="form-check-label" value="DR" for="Type1">Debit</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="Type" id="Type2" value="CR">
+                <label class="form-check-label" value="CR" for="Type2">Credit</label>
+            </div>
+        </div>
+        <div class="col-auto">
+            <input type="submit" value="Add Transaction" class="btn btn-primary" />
+        </div>
+    </div>
+</form>
+
 <table id="tg-hh5Z3" class="tg" width="100%">
     <thead>
         <tr class="first">

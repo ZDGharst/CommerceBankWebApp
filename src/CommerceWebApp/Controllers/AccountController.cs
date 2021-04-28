@@ -37,5 +37,17 @@ namespace Commerce_WebApp.Controllers
 
             return View("Account", await _context.Financial_Transaction.FromSqlInterpolated($"ReturnTransactions {id}").ToListAsync());
         }
+        
+        [HttpPost]
+        public async Task<IActionResult> Index(int id, string type, string description, float amount)
+        {
+
+            // TODO: Prevent injection
+            _context.Database.ExecuteSqlRaw(
+                $"EXEC AddFinancialTransaction {id}, {type}, {amount}, {description}"
+            );
+
+            return View("Account", await _context.Financial_Transaction.FromSqlInterpolated($"ReturnTransactions {id}").ToListAsync());
+        }
     }
 }
