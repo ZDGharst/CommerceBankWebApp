@@ -29,6 +29,7 @@ namespace Commerce_WebApp.Controllers
                 return new RedirectToPageResult("/Account/Login", new { area = "Identity" });
             }
 
+            /* Check to see if the customer is authorized to access this financial account. */
             var Customer_Account = await _context.Customer_Account.FirstOrDefaultAsync(m => m.Customer_Id == userId && m.Account_Id == id);
             if (id == null || Customer_Account == null)
             {
@@ -41,10 +42,22 @@ namespace Commerce_WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(int id, string type, string description, float amount)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return new RedirectToPageResult("/Account/Login", new { area = "Identity" });
+            }
 
-            // TODO: Prevent injection
+            /* Check to see if the customer is authorized to access this financial account; validate
+             * input. If any checks fail, redirect to accounts page. */
+            var Customer_Account = await _context.Customer_Account.FirstOrDefaultAsync(m => m.Customer_Id == userId && m.Account_Id == id);
+            if (Customer_Account == null || amount <= 0 || (type != "CR" && type != "DR"))
+            {
+                return View(await _context.Account.FromSqlInterpolated($"ReturnAccounts {userId}").ToListAsync());
+            }
+
             _context.Database.ExecuteSqlRaw(
-                $"EXEC AddFinancialTransaction {id}, {type}, {amount}, {description}"
+                $"EXEC AddFinancialTransaction {id}, '{type}', {amount}, '{description}'"
             );
 
             return View("Account", await _context.Financial_Transaction.FromSqlInterpolated($"ReturnTransactions {id}").ToListAsync());
