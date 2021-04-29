@@ -1,11 +1,13 @@
 USE CommerceBank_TransactionDB;
 GO
 
+
 /* Drop procedures then recreate them. */
 DROP PROCEDURE IF EXISTS EditNotificationRule;
 DROP PROCEDURE IF EXISTS DelNotificationRule;
 DROP PROCEDURE IF EXISTS MarkNotificationsRead;
 GO
+
 
 /* Procedures that modify/delete data. */
 CREATE PROCEDURE EditNotificationRule
