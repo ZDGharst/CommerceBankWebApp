@@ -1,0 +1,68 @@
+﻿/* FONT */
+@font-face {
+    font-family: OpenSans;
+    src: url("font/OpenSans-Light.ttf");
+}
+
+@font-face {
+    font-family: OpenSans;
+    font-weight: 500;
+    src: url("font/OpenSans-Regular.ttf")
+}
+
+@font-face {
+    font-family: OpenSans;
+    font-weight: bold;
+    src: url("font/OpenSans-Bold.ttf")
+}
+
+@font-face {
+    font-family: Poppins;
+    src: url("font/Poppins-Regular.ttf");
+}
+
+@font-face {
+    font-family: Poppins;
+    font-weight: bold;
+    src: url("font/Poppins-Medium.ttf");
+}
+
+body {
+    font-family: OpenSans;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Poppins;
+}
+
+a {
+    font-family: OpenSans;
+    font-weight: 500;
+}
+
+/* MAIN */
+.main-container {
+    background-color: #faf9f7;
+    margin: 50px auto 0 auto;
+    padding: 25px;
+    border-radius: 5px;
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 0rem 0.6rem rgb(0 0 0 / 10%);
+}
+
+.nav-pills {
+    font-weight: 500;
+}
+
+.nav-pills .nav-link {
+    color: #006747;
+}
+
+.nav-pills .nav-link.active, btn btn-primary {
+    background-color: #006747;
+}
+
+.alert-success {
+    background-color: #FFB300;
+    color: black;
+}

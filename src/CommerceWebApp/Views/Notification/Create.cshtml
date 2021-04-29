@@ -8,6 +8,7 @@
     ViewData["Title"] = "Create";
 }
 
+<link rel="stylesheet" href="~/css/site.css" />
 <link rel="stylesheet" href="~/css/NotificationManagement.css" />
 
 @if (SignInManager.IsSignedIn(User))
@@ -183,14 +184,18 @@
 
             <button type="submit" value="Create" class="add-button btn btn-primary" style="background-color: #006747;">Add Rule</button>
         </form>
-            <!-- /Login Condition -->
+        <!-- /Login Condition -->
 
-</div>
+    </div>
     <!-- /Rule Configuraiton -->
 
     <div>
-        <a asp-action="Manage">Back to Notification Rules</a>
+        <center>
+            <br />
+            <a asp-action="Manage" class="btn btn-primary" style="background-color:#007AA3">Return to Notification Management</a>
+        </center>
     </div>
+
 
 </div>
 }
