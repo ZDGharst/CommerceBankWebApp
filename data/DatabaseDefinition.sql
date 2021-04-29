@@ -138,22 +138,3 @@ BULK INSERT Financial_Transaction
          ROWTERMINATOR = '\n',
          TABLOCK
     );
-
-INSERT INTO Account (account_type, balance, nickname, interest_rate)
-    VALUES (
-        ('Savings', $10000, 'Emergency Fund', 0.1),
-        ('Checking', $2500, 'Zach''s Checking', 0.02),
-        ('Checking', $3000, 'Lindsay''s Checking', 0.02),
-        ('Savings', $15000, 'Emergency Fund', 0.15),
-        ('Checking', $15000, 'My Checking', 0.02),
-        ('Savings', $15000, 'My Savings', 0.15)
-    );
-
-INSERT INTO Customer_Account VALUES (
-    ("b5e057b8-06ae-458d-a7f6-6228d707e5c3", 211111112),
-    ("3203e7e1-dd5d-41c3-972e-c234ea095c84", 211111113),
-    ("3203e7e1-dd5d-41c3-972e-c234ea095c84", 211111114),
-    ("3203e7e1-dd5d-41c3-972e-c234ea095c84", 211111115),
-    ("8a5055a6-1555-41c8-bc7f-2c8cb71e2aa8", 211111116),
-    ("8a5055a6-1555-41c8-bc7f-2c8cb71e2aa8", 211111117)
-);
