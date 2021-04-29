@@ -27,7 +27,7 @@ BEGIN
         VALUES (
             @rule_id,
             ~@read_bit,
-            "A new login on your customer account occured on " + CONVERT(VARCHAR, GETDATE(), 1) + " at " + CONVERT(VARCHAR, GETDATE(), 8) + "."
+            "A new login on your customer account occured on " + FORMAT(GETDATE(), 'MM/dd/yy') + " at " + FORMAT(GETDATE(), 'hh:mm:ss tt') + "."
         );
     END
 END
