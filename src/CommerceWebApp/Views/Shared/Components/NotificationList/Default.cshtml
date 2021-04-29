@@ -1,4 +1,5 @@
 @model IEnumerable<Commerce_WebApp.Models.Notification>
+@using System.Security.Claims;
 
 @if(Model.Count() > 0)
 {
@@ -62,7 +63,14 @@
 		var notificationShowing = false;
 		$("#notification-list-count").bind("click", function() {
 			if(!notificationShowing) {
-				//AJAX to mark notifications as read
+				$.ajax({
+					type: "POST",
+					url: "Notification/MarkRead",
+					data: {
+						customerID: "@User.FindFirstValue(ClaimTypes.NameIdentifier)"
+					}
+				});
+
 				$("#notification-list").show();
 				$("#notification-list-count small").hide();
 				notificationShowing = true;
@@ -71,7 +79,7 @@
 				$("#notification-list").hide();
 				notificationShowing = false;
 			}
-		})
+		});
 	});
 </script>
 }
