@@ -247,5 +247,12 @@ namespace Commerce_WebApp.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Manage");
         }
+
+        public void MarkRead(string customerID)
+        {
+            _context.Database.ExecuteSqlRaw(
+                $"EXEC MarkNotificationsRead '{customerID}'"
+            );
+        }
     }
 }

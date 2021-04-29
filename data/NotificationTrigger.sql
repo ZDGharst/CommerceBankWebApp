@@ -26,7 +26,7 @@ BEGIN
 		-- Find all the notification rules that belongs to all customers that own
 		-- the account that the transaction was created on and store it in a
 		-- temporary table.
-		SELECT id, type, condition, value
+		SELECT id, type, condition, value, notify_web, message
 		INTO #Rules
 		FROM Notification_Rule
 		WHERE customer_id IN (
@@ -38,83 +38,91 @@ BEGIN
 		DECLARE @type VARCHAR(32);
 		DECLARE @condition VARCHAR(32);
 		DECLARE @value DECIMAL(18);
+		DECLARE @read_by_user BIT;
+		DECLARE @message VARCHAR(300);
 
 		-- Iterate across the notification rules that the customer has.
 		WHILE EXISTS(SELECT * FROM #Rules)
 		BEGIN
 			SELECT Top 1
-				@id = id, @type = type, @condition = condition, @value = value
+				@id = id, @type = type, @condition = condition, @value = value, @read_by_user = notify_web, @message = message
 			FROM #Rules;
 			
 			-- Check the notification type to see what conditions should be.
-			IF @type = "balance"
+			IF @type = "Balance"
 			BEGIN
-				IF @condition = "below" AND @value >= @inserted_balance_after
+				IF @condition = "Below" AND @value >= @inserted_balance_after
 				BEGIN
-					INSERT INTO Notification (transaction_id, notification_rule, message)
+					INSERT INTO Notification (transaction_id, notification_rule, read_by_user, message)
 					VALUES (
 						@inserted_id,
 						@id,
-						"The balance in one of your accounts is $" + LTRIM(STR(@inserted_balance_after)) +
-						", which is below your low balance threshold of $" + LTRIM(STR(@value)) + "."
+						~@read_by_user,
+						IIF(@message = 'NA' OR @message IS NULL, "The balance in one of your accounts is $" + LTRIM(STR(@inserted_balance_after)) +
+						", which is below your low balance threshold of $" + LTRIM(STR(@value)) + ".", @message)
 					);
 				END
-				IF @condition = "above" AND @value <= @inserted_balance_after
+				IF @condition = "Above" AND @value <= @inserted_balance_after
 				BEGIN
-					INSERT INTO Notification (transaction_id, notification_rule, message)
+					INSERT INTO Notification (transaction_id, notification_rule, read_by_user, message)
 					VALUES (
 						@inserted_id,
 						@id,
-						"The balance in one of your accounts is $" + LTRIM(STR(@inserted_balance_after)) +
-						", which is above your high balance threshold of $" + LTRIM(STR(@value)) + "."
+						~@read_by_user,
+						IIF(@message = 'NA' OR @message IS NULL, "The balance in one of your accounts is $" + LTRIM(STR(@inserted_balance_after)) +
+						", which is above your high balance threshold of $" + LTRIM(STR(@value)) + ".", @message)
 					);
 				END
 			END
 					
-			IF @type = "withdrawal" AND @inserted_type = "DR"
+			IF @type = "Withdrawal" AND @inserted_type = "DR"
 			BEGIN
-				IF @condition = "below" AND @value >= @inserted_amount
+				IF @condition = "Below" AND @value >= @inserted_amount
 				BEGIN
-					INSERT INTO Notification (transaction_id, notification_rule, message)
+					INSERT INTO Notification (transaction_id, notification_rule, read_by_user, message)
 					VALUES (
 						@inserted_id,
 						@id,
-						"A debit was posted in one of your accounts worth $" + LTRIM(STR(@inserted_amount)) +
-						", which is below your withdrawal notification threshold of $" + LTRIM(STR(@value)) + "."
+						~@read_by_user,
+						IIF(@message = 'NA' OR @message IS NULL, "A debit was posted in one of your accounts worth $" + LTRIM(STR(@inserted_amount)) +
+						", which is below your withdrawal notification threshold of $" + LTRIM(STR(@value)) + ".", @message)
 					);
 				END
-				IF @condition = "above" AND @value <= @inserted_amount
+				IF @condition = "Above" AND @value <= @inserted_amount
 				BEGIN
-					INSERT INTO Notification (transaction_id, notification_rule, message)
+					INSERT INTO Notification (transaction_id, notification_rule, read_by_user, message)
 					VALUES (
 						@inserted_id,
 						@id,
-						"A debit was posted in one of your accounts worth $" + LTRIM(STR(@inserted_amount)) +
-						", which is above your withdrawal notification threshold of $" + LTRIM(STR(@value)) + "."
+						~@read_by_user,
+						IIF(@message = 'NA' OR @message IS NULL, "A debit was posted in one of your accounts worth $" + LTRIM(STR(@inserted_amount)) +
+						", which is above your withdrawal notification threshold of $" + LTRIM(STR(@value)) + ".", @message)
 					);
 				END
 			END
 					
-			IF @type = "deposit" AND @inserted_type = "CR"
+			IF @type = "Deposit" AND @inserted_type = "CR"
 			BEGIN
-				IF @condition = "below" AND @value >= @inserted_amount
+				IF @condition = "Below" AND @value >= @inserted_amount
 				BEGIN
-					INSERT INTO Notification (transaction_id, notification_rule, message)
+					INSERT INTO Notification (transaction_id, notification_rule, read_by_user, message)
 					VALUES (
 						@inserted_id,
 						@id,
-						"A credit was posted in one of your accounts worth $" + LTRIM(STR(@inserted_amount)) +
-						", which is below your deposit notification threshold of $" + LTRIM(STR(@value)) + "."
+						~@read_by_user,
+						IIF(@message = 'NA' OR @message IS NULL, "A credit was posted in one of your accounts worth $" + LTRIM(STR(@inserted_amount)) +
+						", which is below your deposit notification threshold of $" + LTRIM(STR(@value)) + ".", @message)
 					);
 				END
-				IF @condition = "above" AND @value <= @inserted_amount
+				IF @condition = "Above" AND @value <= @inserted_amount
 				BEGIN
-					INSERT INTO Notification (transaction_id, notification_rule, message)
+					INSERT INTO Notification (transaction_id, notification_rule, read_by_user, message)
 					VALUES (
 						@inserted_id,
 						@id,
-						"A credit was posted in one of your accounts worth $" + LTRIM(STR(@inserted_amount)) +
-						", which is above your deposit notification threshold of $" + LTRIM(STR(@value)) + "."
+						~@read_by_user,
+						IIF(@message = 'NA' OR @message IS NULL, "A credit was posted in one of your accounts worth $" + LTRIM(STR(@inserted_amount)) +
+						", which is above your deposit notification threshold of $" + LTRIM(STR(@value)) + ".", @message)
 					);
 				END
 			END
