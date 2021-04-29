@@ -117,6 +117,10 @@
         border-bottom: none;
         border-width: 5px 5px 0
     }
+
+    .add-transaction-submit {
+        background: #007AA3 !important;
+    }
 </style>
 <form asp-action="Index" asp-controller="Account" class="form-horizontal">
     <div class="form-row align-items-center" style="justify-content: center;">
@@ -138,7 +142,7 @@
             </div>
         </div>
         <div class="col-auto">
-            <input type="submit" value="Add Transaction" class="btn btn-primary" />
+            <input type="submit" value="Add Transaction" class="btn btn-primary add-transaction-submit" />
         </div>
     </div>
 </form>
