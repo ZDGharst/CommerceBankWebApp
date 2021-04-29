@@ -123,3 +123,13 @@ BEGIN
         WHERE
             id = @id AND customer_id=@customer_id;
 END
+
+CREATE PROCEDURE MarkNotificationsRead @customer_id NVARCHAR(450)
+AS
+BEGIN
+    UPDATE Notification
+    SET read_by_user = 1
+    FROM Notification AS N
+    	INNER JOIN Notification_Rule AS NR ON N.notification_rule = NR.id
+    WHERE NR.customer_id = @customer_id;
+END
