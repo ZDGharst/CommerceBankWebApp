@@ -1,0 +1,60 @@
+﻿/* MAIN */
+.main-container {
+    margin: 50px auto 0 auto;
+    filter: drop-shadow(0 0 .3rem #BBBBBB);
+}
+
+.dashboard-message {
+    overflow: hidden;
+    position: relative;
+    background-color: #006747;
+    border-radius: 20px 20px 0 0;
+    padding: 15px 0 10px 0;
+    color: white;
+}
+
+.dashboard-message-bg {
+    opacity: 0.1;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.notification-history-container {
+    background-color: #faf9f7;
+    margin: 0 auto 0 auto;
+    padding: 25px;
+    border-radius: 5px;
+    border: 1px solid #e5e5e5;
+    text-align: left;
+}
+
+.button-primary {
+    background-color: #007AA3;
+    color: white;
+}
+
+/* NAVBAR */
+.nav-tabs .nav-link {
+    background-color: #588E7D;
+    color: white;
+    margin-right: 5px;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #006747;
+    color: white;
+}
+
+/* TABLES */
+.log-container {
+    text-align: left;
+}
+
+.table-container {
+    background-color: white;
+    margin: 25px auto 0 auto;
+    padding: 25px;
+    border-radius: 5px;
+    border: 1px solid #e5e5e5;
+}
