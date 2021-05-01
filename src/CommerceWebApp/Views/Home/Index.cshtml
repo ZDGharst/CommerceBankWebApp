@@ -76,10 +76,10 @@
 
                                 <br />
 
-                                <form asp-action="Export" style="text-align: left;">
-                                    <!-- Will lead to /Export given whatever parameter chosen to specify monthly/yearly/custom -->
-                                    <a asp-action="Export" asp-route-id="" class="btn btn-primary">Export</a> <br />
-                                </form>
+                                @using (Html.BeginForm("Export", "Home", FormMethod.Post))
+                                {
+                                    <input type="submit" id="btnSubmit" value="Export" />
+                                }
                             </div>
                         </div>
                     </div>
