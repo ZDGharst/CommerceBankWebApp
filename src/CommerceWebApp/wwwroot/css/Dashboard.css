@@ -24,7 +24,6 @@
     background-color: #faf9f7;
     margin: 0 auto 0 auto;
     padding: 25px;
-    border-radius: 5px;
     border: 1px solid #e5e5e5;
     text-align: left;
 }
@@ -59,6 +58,6 @@
     background-color: white;
     margin: 25px auto 0 auto;
     padding: 25px;
-    border-radius: 5px;
+    border-radius: 0 0 5px 5px;
     border: 1px solid #e5e5e5;
 }

@@ -29,26 +29,26 @@
                 <h6>View and Export Notification Logs</h6>
                 <hr />
 
-                <form>
+                <form style="margin-bottom: -25px;">
                     @if (ViewBag.timePeriod == "yearly")
                     {
-                        <a class="btn button-inactive" href="?timePeriod=monthly">Past Month</a>
-                        <a class="btn button-active" href="?timePeriod=yearly">Past Year</a>
-                        <a class="btn button-inactive" href="?timePeriod=all">Show All</a>
+                        <a class="btn button-inactive" style="border-radius: .25rem .25rem 0 0;" href="?timePeriod=monthly">Past Month</a>
+                        <a class="btn button-active" style="border-radius: .25rem .25rem 0 0;" href="?timePeriod=yearly">Past Year</a>
+                        <a class="btn button-inactive" style="border-radius: .25rem .25rem 0 0;" href="?timePeriod=all">Show All</a>
                     }
 
                     else if (ViewBag.timePeriod == "all")
                     {
-                        <a class="btn button-inactive" href="?timePeriod=monthly">Past Month</a>
-                        <a class="btn button-inactive" href="?timePeriod=yearly">Past Year</a>
-                        <a class="btn button-active" href="?timePeriod=all">Show All</a>
+                        <a class="btn button-inactive" style="border-radius: .25rem .25rem 0 0;" href="?timePeriod=monthly">Past Month</a>
+                        <a class="btn button-inactive" style="border-radius: .25rem .25rem 0 0;" href="?timePeriod=yearly">Past Year</a>
+                        <a class="btn button-active" style="border-radius: .25rem .25rem 0 0;" href="?timePeriod=all">Show All</a>
                     }
 
                     else
                     {
-                        <a class="btn button-active" href="?timePeriod=monthly">Past Month</a>
-                        <a class="btn button-inactive" href="?timePeriod=yearly">Past Year</a>
-                        <a class="btn button-inactive" href="?timePeriod=all">Show All</a>
+                        <a class="btn button-active" style="border-radius: .25rem .25rem 0 0;" href="?timePeriod=monthly">Past Month</a>
+                        <a class="btn button-inactive" style="border-radius: .25rem .25rem 0 0;" href="?timePeriod=yearly">Past Year</a>
+                        <a class="btn button-inactive" style="border-radius: .25rem .25rem 0 0;" href="?timePeriod=all">Show All</a>
                     }
                 </form>
 
