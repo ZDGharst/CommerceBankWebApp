@@ -89,5 +89,21 @@ else
 	<ul id="notification-list">
 		<li>You have no notifications at this time.</li>
 	</ul>
+	<script>
+	$(document).ready(function() {
+		var notificationShowing = false;
+		$("#notification-list-count").bind("click", function() {
+			if(!notificationShowing) {
+				$("#notification-list").show();
+				$("#notification-list-count small").hide();
+				notificationShowing = true;
+			}
+			else {
+				$("#notification-list").hide();
+				notificationShowing = false;
+			}
+		});
+	});
+</script>
 }
 </li>

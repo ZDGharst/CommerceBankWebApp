@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
+@model IEnumerable<Notification_Triggered>
 
 @{
     ViewData["Title"] = "Dashboard";
@@ -57,18 +58,15 @@
                                 </thead>
 
                                 <tbody>
-                                    <tr>
-                                        <td style="text-align: right; padding-right: 100px">$10.00</td>
-                                        <td style="text-align: left;">Balance</td>
-                                        <td style="text-align: left;">Over</td>
-                                        <td style="text-align: left;">3</td>
+                                @foreach(var item in Model)
+                                {
+                                    <tr class="@(item.Count == 0 ? "zero-triggered" : "triggered")">
+                                        <td style="text-align: right; padding-right: 100px")>$@Html.DisplayFor(modelItem => item.Value)</td>
+                                        <td style="text-align: left;">@item.Type</td>
+                                        <td style="text-align: left;">@item.Condition</td>
+                                        <td style="text-align: left;">@item.Count</td>
                                     </tr>
-                                    <tr class="zero-triggered">
-                                        <td style="text-align: right; padding-right: 100px">$10.00</td>
-                                        <td style="text-align: left;">Deposit</td>
-                                        <td style="text-align: left;">Under</td>
-                                        <td style="text-align: left;">0</td>
-                                    </tr>
+                                }
                                 </tbody>
                             </table>
                             <hr />
@@ -104,12 +102,6 @@
                                 </thead>
 
                                 <tbody>
-                                    <tr>
-                                        <td style="text-align: right; padding-right: 100px">$10.00</td>
-                                        <td style="text-align: left;">Balance</td>
-                                        <td style="text-align: left;">Over</td>
-                                        <td style="text-align: left;">15</td>
-                                    </tr>
                                 </tbody>
                             </table>
                             <hr />

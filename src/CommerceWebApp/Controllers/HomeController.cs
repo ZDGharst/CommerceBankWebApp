@@ -28,14 +28,28 @@ namespace Commerce_WebApp.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string? timePeriod)
         {
             if(!_signInManager.IsSignedIn(User))
             {
                 return new RedirectToPageResult("/Account/Login", new { area = "Identity" });
             }
 
-            return View();
+            var timeDiff = -1;
+
+            if(timePeriod == "yearly")
+            {
+                timeDiff = -12;
+            }
+            else if(timePeriod == "all")
+            {
+                timeDiff = -600;
+            }
+
+            DateTime time = DateTime.Now;
+            time = time.AddMonths(timeDiff);
+
+            return View(await _context.Notification_Triggered.FromSqlInterpolated($"ReturnTriggeredNotifications {User.Identity.Name}, {time}").ToListAsync());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
