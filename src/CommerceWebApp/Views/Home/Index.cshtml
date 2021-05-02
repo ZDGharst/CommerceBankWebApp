@@ -1,19 +1,185 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
+
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Dashboard";
 }
 
+<link rel="stylesheet" href="~/css/site.css" />
+<link rel="stylesheet" href="~/css/Dashboard.css" />
+
 <div class="text-center">
-@if (SignInManager.IsSignedIn(User))
-{
-    <p>Welcome, @User.Identity.Name.</p>
-}
-@* This should never happen, because the controller checks to see if the user is logged in. However, it's nearly
-free to leave it here just in case something goes wrong. *@
-else
-{
-    <p>Welcome, please log in to continue.</p>
-}
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div class="main-container">
+            <!-- Dashboard Message -->
+            <div class="dashboard-message">
+                <img class="dashboard-message-bg" src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.usnews.com%2Fcmsmedia%2F0c%2F93%2Fe962a1d6467b8873be05cb374c47%2F140411-customerbank-stock.jpg&f=1&nofb=1" />
+
+                <div class="dashboard-message-content">
+                    <h1>Welcome, @User.Identity.Name!</h1>
+                </div>
+            </div>
+            <!-- /Dashboard Message -->
+            <!-- Notification Display -->
+            <div class="notification-history-container">
+                <h3>Notification History</h3>
+                <h6>View and Export Notification Logs</h6>
+                <hr />
+
+                <!-- Table Navigation -->
+                <ul class="nav nav-tabs" id="rule-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="month-tab" data-toggle="tab" href="#month" role="tab" aria-controls="month" aria-selected="true">Past Month</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="year-tab" data-toggle="tab" href="#year" role="tab" aria-controls="year" aria-selected="false">Past Year</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="custom-tab" data-toggle="tab" href="#custom" role="tab" aria-controls="custom" aria-selected="false">Custom Time</a>
+                    </li>
+                </ul>
+                <!-- /Table Navigation-->
+                <!-- Table View Content -->
+                <div class="tab-content" id="pills-tabContent">
+                    <!-- Past Month -->
+                    <div class="log-container tab-pane fade show active" id="month" role="tabpanel" aria-labelledby="month-tab">
+                        <div class="table-container">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: right; padding-right: 100px" scope="col">Value</th>
+                                        <th style="text-align: left;" scope="col">Type</th>
+                                        <th style="text-align: left;" scope="col">Condition</th>
+                                        <th style="text-align: left;" scope="col"># Triggered</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align: right; padding-right: 100px">$10.00</td>
+                                        <td style="text-align: left;">Balance</td>
+                                        <td style="text-align: left;">Over</td>
+                                        <td style="text-align: left;">3</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <hr />
+
+                            <div class="form-group">
+                                <div class="form-check" style="text-align: left;">
+                                    <!-- Will show/hide rows with 0 # triggered -->
+                                    <input class="form-check-input" type="checkbox" name="hideZeroesMonth" id="hideZeroesMonth" checked />
+                                    <label class="form-check-label" for="hideZeroesMonth">Hide Untriggered Notifications</label>
+                                </div>
+
+                                <br />
+
+                                @using (Html.BeginForm("Export", "Home", FormMethod.Post))
+                                {
+                                    <input type="submit" id="btnSubmit" value="Export" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Past Month-->
+                    <!-- Past Year -->
+                    <div class="log-container tab-pane fade" id="year" role="tabpanel" aria-labelledby="year-tab">
+                        <div class="table-container">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: right; padding-right: 100px" scope="col">Value</th>
+                                        <th style="text-align: left;" scope="col">Type</th>
+                                        <th style="text-align: left;" scope="col">Condition</th>
+                                        <th style="text-align: left;" scope="col"># Triggered</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align: right; padding-right: 100px">$10.00</td>
+                                        <td style="text-align: left;">Balance</td>
+                                        <td style="text-align: left;">Over</td>
+                                        <td style="text-align: left;">15</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <hr />
+
+                            <div class="form-group">
+                                <div class="form-check" style="text-align: left;">
+                                    <!-- Will show/hide rows with 0 # triggered -->
+                                    <input class="form-check-input" type="checkbox" name="hideZeroesMonth" id="hideZeroesMonth" checked />
+                                    <label class="form-check-label" for="hideZeroesMonth">Hide Untriggered Notifications</label>
+                                </div>
+
+                                <br />
+
+                                <form asp-action="Export" style="text-align: left;">
+                                    <!-- Will lead to /Export given whatever parameter chosen to specify monthly/yearly/custom -->
+                                    <a asp-action="Export" asp-route-id="" class="btn btn-primary">Export</a> <br />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Past Year -->
+                    <!-- Custom Time -->
+                    <div class="log-container tab-pane fade" id="custom" role="tabpanel" aria-labelledby="custom-tab">
+                        <div class="table-container">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: right; padding-right: 100px" scope="col">Value</th>
+                                        <th style="text-align: left;" scope="col">Type</th>
+                                        <th style="text-align: left;" scope="col">Condition</th>
+                                        <th style="text-align: left;" scope="col"># Triggered</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align: right; padding-right: 100px">$10.00</td>
+                                        <td style="text-align: left;">Balance</td>
+                                        <td style="text-align: left;">Over</td>
+                                        <td style="text-align: left;">0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <hr />
+
+                            <div class="form-group">
+                                <div class="form-check" style="text-align: left;">
+                                    <!-- Will show/hide rows with 0 # triggered -->
+                                    <input class="form-check-input" type="checkbox" name="hideZeroesMonth" id="hideZeroesMonth" checked />
+                                    <label class="form-check-label" for="hideZeroesMonth">Hide Untriggered Notifications</label>
+                                </div>
+
+                                <br />
+
+                                <form asp-action="Export" style="text-align: left;">
+                                    <!-- Will lead to /Export given whatever parameter chosen to specify monthly/yearly/custom -->
+                                    <a asp-action="Export" asp-route-id="" class="btn btn-primary">Export</a> <br />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Custom Time -->
+                </div>
+                <!-- /Table View Content -->
+            </div>
+            <!-- /Notification Display-->
+        </div>
+        
+    }
+
+
+
+    @* This should never happen, because the controller checks to see if the user is logged in. However, it's nearly
+        free to leave it here just in case something goes wrong. *@
+    else
+    {
+        <p>Welcome, please log in to continue.</p>
+    }
 </div>
