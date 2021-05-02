@@ -93,8 +93,7 @@
                                 {
                                     @using (Html.BeginForm("ExportYear", "Home", FormMethod.Post))
                                     {
-                                        <input type="hidden" value="@ViewBag.timePeriod" />
-                                        <input type="submit" id="btnSubmit" value="Export" />
+                                        <input class="btn btn-primary" type="submit" id="btnSubmit" value="Export" />
                                     }
                                 }
 
@@ -102,8 +101,7 @@
                                 {
                                     @using (Html.BeginForm("ExportAll", "Home", FormMethod.Post))
                                     {
-                                        <input type="hidden" value="@ViewBag.timePeriod" />
-                                        <input type="submit" id="btnSubmit" value="Export" />
+                                        <input class="btn btn-primary" type="submit" id="btnSubmit" value="Export" />
                                     }
                                 }
 
@@ -111,8 +109,7 @@
                                 {
                                     @using (Html.BeginForm("ExportMonth", "Home", FormMethod.Post))
                                     {
-                                        <input type="hidden" value="@ViewBag.timePeriod" />
-                                        <input type="submit" id="btnSubmit" value="Export" />
+                                        <input class="btn btn-primary" type="submit" id="btnSubmit" value="Export" />
                                     }
                                 }
                             </div>
