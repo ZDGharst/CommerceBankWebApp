@@ -7,6 +7,7 @@ DROP PROCEDURE IF EXISTS ReturnAccounts;
 DROP PROCEDURE IF EXISTS ReturnTransactions;
 DROP PROCEDURE IF EXISTS ReturnNotificationRules;
 DROP PROCEDURE IF EXISTS ReturnUnreadNotifications;
+DROP PROCEDURE IF EXISTS ReturnTriggeredNotifications;
 GO
 
 
@@ -59,5 +60,21 @@ BEGIN
         INNER JOIN AspNetUsers AS USR ON NR.customer_id = USR.Id 
         WHERE USR.UserName = @UserName AND read_by_user = 0
         ORDER BY N.id DESC;
+END
+GO
+
+
+CREATE PROCEDURE ReturnTriggeredNotifications
+    @UserName NVARCHAR(256),
+    @TimeFrame DATETIME
+AS
+BEGIN
+    SELECT NR.id, NR.type, NR.condition, NR.value, COUNT(notification_rule) as Count
+        FROM Notification_Rule AS NR
+        LEFT JOIN (SELECT notification_rule FROM Notification WHERE Notification.timestamp > @TimeFrame) b ON NR.id = notification_rule
+        INNER JOIN AspNetUsers AS USR ON NR.customer_id = USR.Id 
+        WHERE USR.UserName = @UserName
+        GROUP BY NR.id, NR.type, NR.condition, NR.value, notification_rule
+        ORDER BY Count DESC
 END
 GO
