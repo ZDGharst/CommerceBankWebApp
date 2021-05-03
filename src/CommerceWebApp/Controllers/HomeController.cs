@@ -30,6 +30,8 @@ namespace Commerce_WebApp.Controllers
 
         public async Task<IActionResult> Index(string? timePeriod)
         {
+            ViewBag.timePeriod = timePeriod;
+
             if(!_signInManager.IsSignedIn(User))
             {
                 return new RedirectToPageResult("/Account/Login", new { area = "Identity" });
@@ -59,53 +61,127 @@ namespace Commerce_WebApp.Controllers
         }
 
         [HttpPost]
-        public FileResult Export()
+        public FileResult ExportAll()
         {
-            /*List<object> notification_Rules = _context.Notification_Rule.FromSqlInterpolated($"ReturnNotificationRules {User.Identity.Name}").ToList<object>();
-            notification_Rules.Insert(0, new string[4] { "1", "2", "3", "4" });
 
+            var timeDiff = -600;
+
+            DateTime time = DateTime.Now;
+            time = time.AddMonths(timeDiff);
+
+            List<Notification_Triggered> notification_Triggered = _context.Notification_Triggered.FromSqlInterpolated($"ReturnTriggeredNotifications {User.Identity.Name}, {time}").ToList<Notification_Triggered>();
             StringBuilder stringBuilder = new StringBuilder();
-            for (int i = 0; i < notification_Rules.Count; i++)
+
+            stringBuilder.Append("Type" + ',');
+            stringBuilder.Append("Condition" + ',');
+            stringBuilder.Append("Value" + ',');
+            stringBuilder.Append("Count" + ',');
+            stringBuilder.Append("\r\n");
+
+            foreach (var notification in notification_Triggered)
             {
-                string[] rule = (string[])notification_Rules[i];
-                for (int j = 0; j < rule.Length; j++)
+                if (notification.Type == "Login")
                 {
-                    stringBuilder.Append(rule[j] + ',');
+                    stringBuilder.Append(notification.Type + ',');
+                    stringBuilder.Append("---" + ',');
+                    stringBuilder.Append("---" + ',');
+                    stringBuilder.Append(notification.Count.ToString() + ',');
+                }
+
+                else
+                {
+                    stringBuilder.Append(notification.Type + ',');
+                    stringBuilder.Append(notification.Condition + ',');
+                    stringBuilder.Append(notification.Value.ToString() + ',');
+                    stringBuilder.Append(notification.Count.ToString() + ',');
                 }
 
                 stringBuilder.Append("\r\n");
             }
 
-            return File(Encoding.UTF8.GetBytes(stringBuilder.ToString()), "text/csv", "Grid.csv");*/
+            return File(Encoding.UTF8.GetBytes(stringBuilder.ToString()), "text/csv", "Notification_Log_All.csv");
+        }
 
-            List<object> notification_rules = (from rule in _context.Notification_Rule.ToList().Take(10) select new[] { rule.Value.ToString(), rule.Type, rule.Condition }).ToList<object>();
+        [HttpPost]
+        public FileResult ExportMonth()
+        {
+            var timeDiff = -1;
 
-            notification_rules.Insert(0, new string[3] { "Value", "Type", "Condition" });
+            DateTime time = DateTime.Now;
+            time = time.AddMonths(timeDiff);
 
+            List<Notification_Triggered> notification_Triggered = _context.Notification_Triggered.FromSqlInterpolated($"ReturnTriggeredNotifications {User.Identity.Name}, {time}").ToList<Notification_Triggered>();
             StringBuilder stringBuilder = new StringBuilder();
-            for (int i = 0; i < notification_rules.Count; i++)
-            {
-                string[] rule = (string[])notification_rules[i];
-                for (int j = 0; j < rule.Length; j++)
-                {
-                    //Append data with separator.
-                    if (rule[j] == "NA")
-                    {
-                        stringBuilder.Append("---" + ',');
-                    }
 
-                    else
-                    {
-                        stringBuilder.Append(rule[j] + ',');
-                    }
+            stringBuilder.Append("Type" + ',');
+            stringBuilder.Append("Condition" + ',');
+            stringBuilder.Append("Value" + ',');
+            stringBuilder.Append("Count" + ',');
+            stringBuilder.Append("\r\n");
+
+            foreach (var notification in notification_Triggered)
+            {
+                if (notification.Type == "Login")
+                {
+                    stringBuilder.Append(notification.Type + ',');
+                    stringBuilder.Append("---" + ',');
+                    stringBuilder.Append("---" + ',');
+                    stringBuilder.Append(notification.Count.ToString() + ',');
                 }
 
-                //Append new line character.
-                stringBuilder.Append("\r\n");
+                else
+                {
+                    stringBuilder.Append(notification.Type + ',');
+                    stringBuilder.Append(notification.Condition + ',');
+                    stringBuilder.Append(notification.Value.ToString() + ',');
+                    stringBuilder.Append(notification.Count.ToString() + ',');
+                }
 
+                stringBuilder.Append("\r\n");
             }
 
-            return File(Encoding.UTF8.GetBytes(stringBuilder.ToString()), "text/csv", "Grid.csv");
+            return File(Encoding.UTF8.GetBytes(stringBuilder.ToString()), "text/csv", "Notification_Log_Monthly.csv");
+        }
+
+        [HttpPost]
+        public FileResult ExportYear()
+        {
+            var timeDiff = -12;
+
+            DateTime time = DateTime.Now;
+            time = time.AddMonths(timeDiff);
+
+            List<Notification_Triggered> notification_Triggered = _context.Notification_Triggered.FromSqlInterpolated($"ReturnTriggeredNotifications {User.Identity.Name}, {time}").ToList<Notification_Triggered>();
+            StringBuilder stringBuilder = new StringBuilder();
+
+            stringBuilder.Append("Type" + ',');
+            stringBuilder.Append("Condition" + ',');
+            stringBuilder.Append("Value" + ',');
+            stringBuilder.Append("Count" + ',');
+            stringBuilder.Append("\r\n");
+
+            foreach (var notification in notification_Triggered)
+            {
+                if (notification.Type == "Login")
+                {
+                    stringBuilder.Append(notification.Type + ',');
+                    stringBuilder.Append("---" + ',');
+                    stringBuilder.Append("---" + ',');
+                    stringBuilder.Append(notification.Count.ToString() + ',');
+                }
+
+                else
+                {
+                    stringBuilder.Append(notification.Type + ',');
+                    stringBuilder.Append(notification.Condition + ',');
+                    stringBuilder.Append(notification.Value.ToString() + ',');
+                    stringBuilder.Append(notification.Count.ToString() + ',');
+                }
+
+                stringBuilder.Append("\r\n");
+            }
+
+            return File(Encoding.UTF8.GetBytes(stringBuilder.ToString()), "text/csv", "Notification_Log_Yearly.csv");
         }
     }
 }
