@@ -15,8 +15,9 @@ AS
 BEGIN
 	DECLARE @rule_id INT;
 	DECLARE @read_bit BIT;
+	DECLARE @message VARCHAR(300);
     
-    SELECT @rule_id = NR.id, @read_bit = NR.notify_web
+    SELECT @rule_id = NR.id, @read_bit = NR.notify_web, @message = NR.message
         FROM Notification_Rule AS NR
         INNER JOIN AspNetUsers AS USR ON NR.customer_id = USR.Id 
         WHERE USR.UserName = @UserName AND type = "Login";
@@ -27,7 +28,11 @@ BEGIN
         VALUES (
             @rule_id,
             ~@read_bit,
-            "A new login on your customer account occured on " + FORMAT(GETDATE(), 'MM/dd/yy') + " at " + FORMAT(GETDATE(), 'hh:mm:ss tt') + "."
+            IIF(
+            	@message = "NA" OR @message IS NULL,
+            	"A new login on your customer account occured on " + FORMAT(GETDATE(), 'MM/dd/yy') + " at " + FORMAT(GETDATE(), 'hh:mm:ss tt') + ".",
+            	@message
+            )
         );
     END
 END
@@ -49,7 +54,7 @@ BEGIN
         (@condition = 'Above' OR @condition = 'Below' OR @condition = 'NA') 
         BEGIN
             INSERT INTO Notification_Rule (customer_id, type, condition, value, notify_text, notify_email, notify_web, message)
-                VALUES (@customer_id, @type, @condition, @value, @notify_text, @notify_email, @notify_web, 'Your notification rule "' + @type + ' ' + @condition + ' $' + CONVERT(VARCHAR, @value) + '" has been triggered!');
+                VALUES (@customer_id, @type, @condition, @value, @notify_text, @notify_email, @notify_web, @message);
         END
 END
 GO
