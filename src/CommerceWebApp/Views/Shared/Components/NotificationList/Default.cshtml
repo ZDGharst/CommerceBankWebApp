@@ -1,0 +1,85 @@
+@model IEnumerable<Commerce_WebApp.Models.Notification>
+@using System.Security.Claims;
+
+@if(Model.Count() > 0)
+{
+<style>
+	#notification-list-count {
+		cursor: pointer;
+		margin: 0 5px;
+		padding: 8px 12px;
+		position: relative;
+	}
+
+	#notification-list-count small {
+		background: #E30000;
+		border-radius: 5px;
+		color: #FFF;
+		font-size: .8em;
+		padding: 1px 3px;
+		position: absolute;
+		left: 8px;
+		top: 15px;
+	}
+
+	#notification-list {
+		background: #FFF;
+		border: 1px solid #333;
+		border-radius: 5px;
+		display: none;
+		color: #333;
+		margin: 0;
+		padding: 0;
+  		position: absolute;
+		top: 50px;
+		left: -100px;
+		width: 350px;
+		z-index: 100;
+	}
+
+	#notification-list li {
+		border-bottom: 1px dotted #777;
+		margin: 10px;
+		padding: 10px;
+		list-style-type: none;
+	}
+
+	#notification-list li:last-child {
+		border-bottom: 0;
+	}
+</style>
+
+<li id="notification-list-count">🔔 <small>@Model.Count()</small>
+	<ul id="notification-list">
+		@foreach (var item in Model)
+		{
+		    <li>@item.Message</li>
+		}
+	</ul>
+</li>
+
+<script>
+	$(document).ready(function() {
+		var notificationShowing = false;
+		$("#notification-list-count").bind("click", function() {
+			if(!notificationShowing) {
+				$.ajax({
+					type: "POST",
+					url: "Notification/MarkRead",
+					data: {
+						customerID: "@User.FindFirstValue(ClaimTypes.NameIdentifier)"
+					}
+				});
+
+				$("#notification-list").show();
+				$("#notification-list-count small").hide();
+				notificationShowing = true;
+			}
+			else {
+				$("#notification-list").hide();
+				notificationShowing = false;
+			}
+		});
+	});
+</script>
+}

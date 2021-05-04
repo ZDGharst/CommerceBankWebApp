@@ -1,0 +1,108 @@
+﻿@model Commerce_WebApp.Models.Notification_Rule
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<link rel="stylesheet" href="~/css/NotificationManagement.css" />
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="rule-container">
+        <h3>Modify Notification Rule</h3>
+        <h6 class="action-danger">You can edit this rule again later.</h6>
+        <hr />
+        <form asp-action="Edit">
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="text-align: left;" scope="col">Type</th>
+                            <th style="text-align: left;" scope="col">Condition</th>
+                            <th style="text-align: left;" scope="col">Value</th>
+                            <th style="text-align: left;" scope="col">Notify Method(s)</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(model => model.Type)
+                            </td>
+
+                            @if (Model.Type.ToString() == "Login")
+                            {
+                                <td>
+                                    ---
+                                </td>
+
+                                <td>
+                                    ---
+                                </td>
+
+                                <input asp-for="Condition" type="hidden" value="NA" />
+                                <input asp-for="Value" type="hidden" value="0.00" />
+                            }
+                            else
+                            {
+                                <td>
+                                    <select class="btn btn-secondary" style="float: left; margin-right: 15px; display: block;" id="Condition" name="Condition">
+                                        @if (Model.Condition.ToString() == "Above")
+                                        {
+                                            <option value="Above" class="btn btn-light">Above</option>
+                                            <option value="Below" class="btn btn-light">Below</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="Below" class="btn btn-light">Below</option>
+                                            <option value="Above" class="btn btn-light">Above</option>
+                                        }
+                                    </select>
+                                </td>
+
+                                <td>
+                                    @if (Model.Type.ToString() == "Balance")
+                                    {
+                                        <input asp-for="Value" type="number" value="@Model.Value" class="condition-input form-control" style="width: 150px;" min="0.00" max="10000.00" step="0.01" />
+                                        <span asp-validation-for="Value" class="text-danger"></span>
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Value" type="number" value="@Model.Value" class="condition-input form-control" style="width: 150px;" min="0.01" max="10000.00" step="0.01" />
+                                        <span asp-validation-for="Value" class="text-danger"></span>
+                                    }
+                                </td>
+                            }
+                            <td>
+                                <input asp-for="Notify_Web" />
+                                <label asp-for="Notify_Web">Web Notification</label>
+                                <br />
+
+                                <input asp-for="Notify_Email" />
+                                <label asp-for="Notify_Email">Email Notification</label>
+                                <br />
+
+                                <input asp-for="Notify_Text" />
+                                <label asp-for="Notify_Text">SMS Notification</label>
+                                <br />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br />
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Type" value="@Model.Type.ToString()" />
+            <input type="hidden" asp-for="Message" value="@Model.Message.ToString()" />
+            <input type="submit" value="Edit" class="btn btn-primary" style="background-color: #007AA3;">
+            <a asp-action="Manage" class="btn btn-secondary" style="margin-left: 10px;">Back to Notification Rules</a>
+        </form>
+    </div>
+}
+else
+{
+    <p>You must be <a asp-area="Identity" asp-page="/Account/Login">logged in</a> to view this resource.</p>
+}

@@ -10,7 +10,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+
+using Commerce_WebApp.Data;
 
 namespace Commerce_WebApp.Areas.Identity.Pages.Account
 {
@@ -20,14 +23,17 @@ namespace Commerce_WebApp.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly ApplicationDbContext _context;
 
         public LoginModel(SignInManager<IdentityUser> signInManager, 
             ILogger<LoginModel> logger,
-            UserManager<IdentityUser> userManager)
+            UserManager<IdentityUser> userManager,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _context = context;
         }
 
         [BindProperty]
@@ -87,8 +93,7 @@ namespace Commerce_WebApp.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-
-                    // run the stored procedure "LoginNotification" here
+                    _context.Database.ExecuteSqlRaw(@"EXEC LoginNotification {0}", Input.UserName);
 
                     return LocalRedirect(returnUrl);
                 }
