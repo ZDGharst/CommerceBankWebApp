@@ -83,6 +83,7 @@ CREATE TABLE [dbo].[Notification] (
     [notification_rule] INT           NOT NULL,
     [read]              BIT           NULL,
     [message]           VARCHAR (150) NULL,
+    [timestamp]         DATETIME      DEFAULT GETDATE(),
 
     PRIMARY KEY CLUSTERED ([id] ASC),
     ADD CONSTRAINT FK_Notification_FinancialTransaction

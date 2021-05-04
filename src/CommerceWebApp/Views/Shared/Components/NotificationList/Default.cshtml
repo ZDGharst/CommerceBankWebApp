@@ -1,8 +1,6 @@
 @model IEnumerable<Commerce_WebApp.Models.Notification>
 @using System.Security.Claims;
 
-@if(Model.Count() > 0)
-{
 <style>
 	#notification-list-count {
 		cursor: pointer;
@@ -49,16 +47,18 @@
 	}
 </style>
 
-<li id="notification-list-count">🔔 <small>@Model.Count()</small>
+<li id="notification-list-count">🔔
+
+@if(Model.Count() > 0)
+{
+	<small>@Model.Count()</small>
 	<ul id="notification-list">
 		@foreach (var item in Model)
 		{
 		    <li>@item.Message</li>
 		}
 	</ul>
-</li>
-
-<script>
+	<script>
 	$(document).ready(function() {
 		var notificationShowing = false;
 		$("#notification-list-count").bind("click", function() {
@@ -82,4 +82,28 @@
 		});
 	});
 </script>
+
 }
+else
+{
+	<ul id="notification-list">
+		<li>You have no notifications at this time.</li>
+	</ul>
+	<script>
+	$(document).ready(function() {
+		var notificationShowing = false;
+		$("#notification-list-count").bind("click", function() {
+			if(!notificationShowing) {
+				$("#notification-list").show();
+				$("#notification-list-count small").hide();
+				notificationShowing = true;
+			}
+			else {
+				$("#notification-list").hide();
+				notificationShowing = false;
+			}
+		});
+	});
+</script>
+}
+</li>
