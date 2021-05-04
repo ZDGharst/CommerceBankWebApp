@@ -11,5 +11,7 @@ namespace Commerce_WebApp.Models
     public int? Transaction_Id { get; set; }
     public int Notification_Rule { get; set; }
     public string Message { get; set; }
-  }
+    /*[DisplayFormat(DataFormatString = "{0:g}")]
+    public DateTime TimeStamp { get; set; }*/
+    }
 }

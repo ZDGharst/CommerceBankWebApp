@@ -1,19 +1,145 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
+@model IEnumerable<Notification_Triggered>
+
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Dashboard";
 }
 
+<link rel="stylesheet" href="~/css/site.css" />
+<link rel="stylesheet" href="~/css/Dashboard.css" />
+
 <div class="text-center">
-@if (SignInManager.IsSignedIn(User))
-{
-    <p>Welcome, @User.Identity.Name.</p>
-}
-@* This should never happen, because the controller checks to see if the user is logged in. However, it's nearly
-free to leave it here just in case something goes wrong. *@
-else
-{
-    <p>Welcome, please log in to continue.</p>
-}
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div class="main-container">
+            <!-- Dashboard Message -->
+            <div class="dashboard-message">
+                <img class="dashboard-message-bg" style="width: 100%;" src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.usnews.com%2Fcmsmedia%2F0c%2F93%2Fe962a1d6467b8873be05cb374c47%2F140411-customerbank-stock.jpg&f=1&nofb=1" />
+
+                <div class="dashboard-message-content">
+                    <h1>Welcome, @User.Identity.Name!</h1>
+                </div>
+            </div>
+            <!-- /Dashboard Message -->
+            <!-- Notification Display -->
+            <div class="notification-history-container">
+                <h3>Notification History</h3>
+                <h6>View and Export Notification Logs</h6>
+                <hr />
+
+                <form style="margin-bottom: -25px;">
+                    @if (ViewBag.timePeriod == "yearly")
+                    {
+                        <a class="btn button-inactive" style="border-radius: .25rem .25rem 0 0;" href="?timePeriod=monthly">Past Month</a>
+                        <a class="btn button-active" style="border-radius: .25rem .25rem 0 0;" href="?timePeriod=yearly">Past Year</a>
+                        <a class="btn button-inactive" style="border-radius: .25rem .25rem 0 0;" href="?timePeriod=all">Show All</a>
+                    }
+
+                    else if (ViewBag.timePeriod == "all")
+                    {
+                        <a class="btn button-inactive" style="border-radius: .25rem .25rem 0 0;" href="?timePeriod=monthly">Past Month</a>
+                        <a class="btn button-inactive" style="border-radius: .25rem .25rem 0 0;" href="?timePeriod=yearly">Past Year</a>
+                        <a class="btn button-active" style="border-radius: .25rem .25rem 0 0;" href="?timePeriod=all">Show All</a>
+                    }
+
+                    else
+                    {
+                        <a class="btn button-active" style="border-radius: .25rem .25rem 0 0;" href="?timePeriod=monthly">Past Month</a>
+                        <a class="btn button-inactive" style="border-radius: .25rem .25rem 0 0;" href="?timePeriod=yearly">Past Year</a>
+                        <a class="btn button-inactive" style="border-radius: .25rem .25rem 0 0;" href="?timePeriod=all">Show All</a>
+                    }
+                </form>
+
+                <!-- Table View Content -->
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="log-container tab-pane fade show active" id="month" role="tabpanel" aria-labelledby="month-tab">
+                        <div class="table-container">
+                            <table class="table table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: right; padding-right: 100px" scope="col">Value</th>
+                                        <th style="text-align: left;" scope="col">Type</th>
+                                        <th style="text-align: left;" scope="col">Condition</th>
+                                        <th style="text-align: left;" scope="col"># Triggered</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                @foreach(var item in Model)
+                                {
+                                    <tr class="@(item.Count == 0 ? "zero-triggered" : "triggered")">
+                                        @if (item.Type.ToString() == "Login")
+                                        {
+                                            <td style="text-align: right; padding-right: 100px" )>---</td>
+                                            <td style="text-align: left;">@item.Type</td>
+                                            <td style="text-align: left;">---</td>
+                                            <td style="text-align: left;">@item.Count</td>
+                                        }
+
+                                        else
+                                        {
+                                            <td style="text-align: right; padding-right: 100px" )>$@Html.DisplayFor(modelItem => item.Value)</td>
+                                            <td style="text-align: left;">@item.Type</td>
+                                            <td style="text-align: left;">@item.Condition</td>
+                                            <td style="text-align: left;">@item.Count</td>
+                                        }
+                                    </tr>
+                                }
+                                </tbody>
+                            </table>
+                            <hr />
+
+                            <div class="form-group">
+                                <div class="form-check" style="text-align: left;">
+                                    <!-- Will show/hide rows with 0 # triggered -->
+                                    <input class="form-check-input" type="checkbox" name="hideZeroesCheckbox" id="hideZeroesMonth" checked />
+                                    <label class="form-check-label" for="hideZeroesMonth">Hide Untriggered Notifications</label>
+                                </div>
+
+                                <br />
+
+                                @if (ViewBag.timePeriod == "yearly")
+                                {
+                                    @using (Html.BeginForm("ExportYear", "Home", FormMethod.Post))
+                                    {
+                                        <input class="btn btn-primary" type="submit" id="btnSubmit" value="Export" />
+                                    }
+                                }
+
+                                else if (ViewBag.timePeriod == "all")
+                                {
+                                    @using (Html.BeginForm("ExportAll", "Home", FormMethod.Post))
+                                    {
+                                        <input class="btn btn-primary" type="submit" id="btnSubmit" value="Export" />
+                                    }
+                                }
+
+                                else
+                                {
+                                    @using (Html.BeginForm("ExportMonth", "Home", FormMethod.Post))
+                                    {
+                                        <input class="btn btn-primary" type="submit" id="btnSubmit" value="Export" />
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Table View Content -->
+            </div>
+            <!-- /Notification Display-->
+        </div>
+        
+    }
+
+
+
+    @* This should never happen, because the controller checks to see if the user is logged in. However, it's nearly
+        free to leave it here just in case something goes wrong. *@
+    else
+    {
+        <p>Welcome, please log in to continue.</p>
+    }
 </div>
