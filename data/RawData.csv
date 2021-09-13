@@ -26,7 +26,7 @@ id,account_id,timestamp,type,amount,balance_after,description
 ,211111110,07/03/20,DR,350.00,5871.02,Rent
 ,211111110,07/03/20,DR,6.50,5864.52,Neo's
 ,211111110,07/05/20,DR,230.00,5634.52,Commerce Bank Credit Card payment
-,211111110,07/06/20,DR,100.00,5534.52,Best Buy, 
+,211111110,07/06/20,DR,100.00,5534.52,Best Buy
 ,211111110,07/07/20,DR,300.00,5234.52,Pottery Barn
 ,211111110,07/07/20,DR,23.00,5211.52,The Loft
 ,211111110,07/07/20,DR,45.00,5166.52,Dave and Busters
